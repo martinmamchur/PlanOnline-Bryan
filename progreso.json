@@ -1,0 +1,953 @@
+{
+  "app": "plan-bryan-araujo",
+  "exportedAt": "2026-07-27T18:10:42.335Z",
+  "planStart": "",
+  "logData": {
+    "log_s1_d0_f1_e0": {
+      "sets": [
+        {
+          "kg": "100",
+          "reps": "9"
+        },
+        {
+          "kg": "100",
+          "reps": "9"
+        },
+        {
+          "kg": "100",
+          "reps": "9"
+        },
+        {
+          "kg": "100",
+          "reps": "9"
+        }
+      ],
+      "comment": "Mejorar tecnica, me dolió un poco espalda baja apenas. No quede dolorido. "
+    },
+    "log_s1_d0_f1_e1": {
+      "sets": [
+        {
+          "kg": "60",
+          "reps": "10"
+        },
+        {
+          "kg": "60",
+          "reps": "10"
+        },
+        {
+          "kg": "70",
+          "reps": "9"
+        },
+        {
+          "kg": "70",
+          "reps": "9"
+        }
+      ],
+      "comment": "Todo ok"
+    },
+    "log_s1_d0_f0_e0": {
+      "sets": [
+        {
+          "kg": "5",
+          "reps": ""
+        }
+      ]
+    },
+    "log_s1_d0_f0_e1": {
+      "sets": [
+        {
+          "kg": "",
+          "reps": ""
+        },
+        {
+          "kg": "",
+          "reps": ""
+        }
+      ]
+    },
+    "log_s1_d0_f0_e2": {
+      "sets": [
+        {
+          "kg": "",
+          "reps": ""
+        },
+        {
+          "kg": "",
+          "reps": ""
+        }
+      ]
+    },
+    "log_s1_d0_f0_e3": {
+      "sets": [
+        {
+          "kg": "",
+          "reps": ""
+        },
+        {
+          "kg": "",
+          "reps": ""
+        }
+      ]
+    },
+    "log_s1_d0_f1_e2": {
+      "sets": [
+        {
+          "kg": "30",
+          "reps": "12"
+        },
+        {
+          "kg": "30",
+          "reps": "12"
+        },
+        {
+          "kg": "30",
+          "reps": "12"
+        }
+      ],
+      "comment": "Todo ok, quizás estuve en un RPE 8"
+    },
+    "log_s1_d0_f1_e3": {
+      "sets": [
+        {
+          "kg": "60",
+          "reps": "11"
+        },
+        {
+          "kg": "60",
+          "reps": "11"
+        },
+        {
+          "kg": "60",
+          "reps": "11"
+        }
+      ],
+      "comment": "Todo ok\n"
+    },
+    "log_s1_d0_f2_e0": {
+      "sets": [
+        {
+          "kg": "",
+          "reps": "15min"
+        }
+      ]
+    },
+    "log_s1_d0_f2_e1": {
+      "sets": [
+        {
+          "kg": "",
+          "reps": "3 de 45seg"
+        }
+      ]
+    },
+    "log_s1_d0_f3_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "3min"
+        }
+      ]
+    },
+    "log_s1_d1_f1_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "30min"
+        }
+      ],
+      "comment": "Tuve que caminar 5min aprox"
+    },
+    "log_s1_d1_f2_e0": {
+      "comment": "Me mató pero llegué ",
+      "sets": [
+        {
+          "kg": "4",
+          "reps": "500"
+        }
+      ]
+    },
+    "log_s1_d1_f2_e1": {
+      "sets": [
+        {
+          "kg": "4",
+          "reps": "200"
+        }
+      ]
+    },
+    "log_s1_d2_f1_e2": {
+      "sets": [
+        {
+          "kg": "12.5",
+          "reps": "10"
+        },
+        {
+          "kg": "12.5",
+          "reps": "10"
+        },
+        {
+          "kg": "12.5",
+          "reps": "10"
+        }
+      ]
+    },
+    "log_s1_d2_f1_e3": {
+      "sets": [
+        {
+          "kg": "49.9",
+          "reps": "9"
+        },
+        {
+          "kg": "49.9",
+          "reps": "9"
+        },
+        {
+          "kg": "49.9",
+          "reps": "9"
+        }
+      ],
+      "comment": "Jalón "
+    },
+    "log_s1_d2_f1_e0": {
+      "sets": [
+        {
+          "kg": "45",
+          "reps": "8"
+        },
+        {
+          "kg": "50",
+          "reps": "8"
+        },
+        {
+          "kg": "50",
+          "reps": "8"
+        },
+        {
+          "kg": "45",
+          "reps": "8"
+        }
+      ]
+    },
+    "log_s1_d2_f1_e1": {
+      "sets": [
+        {
+          "kg": "38",
+          "reps": "10"
+        },
+        {
+          "kg": "38",
+          "reps": "10"
+        },
+        {
+          "kg": "38",
+          "reps": "10"
+        },
+        {
+          "kg": "38",
+          "reps": "10"
+        }
+      ],
+      "comment": "Le podía meter mas"
+    },
+    "log_s1_d2_f1_e4": {
+      "sets": [
+        {
+          "kg": "48",
+          "reps": "30m"
+        },
+        {
+          "kg": "48",
+          "reps": "30m"
+        },
+        {
+          "kg": "48",
+          "reps": "30m"
+        }
+      ],
+      "comment": "Leve, lo puedo esforzar mas"
+    },
+    "log_s1_d2_f2_e0": {
+      "sets": [
+        {
+          "kg": "6",
+          "reps": "3x15"
+        }
+      ]
+    },
+    "log_s1_d2_f2_e1": {
+      "sets": [
+        {
+          "kg": "",
+          "reps": "3x10"
+        }
+      ]
+    },
+    "log_s2_d0_f1_e3": {
+      "sets": [
+        {
+          "kg": "70",
+          "reps": "11 "
+        },
+        {
+          "kg": "70",
+          "reps": "11"
+        },
+        {
+          "kg": "70",
+          "reps": "11"
+        }
+      ]
+    },
+    "log_s2_d0_f1_e2": {
+      "sets": [
+        {
+          "kg": "30",
+          "reps": "12"
+        },
+        {
+          "kg": "30",
+          "reps": "12"
+        },
+        {
+          "kg": "30",
+          "reps": "12"
+        }
+      ]
+    },
+    "log_s2_d0_f1_e1": {
+      "sets": [
+        {
+          "kg": "70",
+          "reps": "9"
+        },
+        {
+          "kg": "70",
+          "reps": "9"
+        },
+        {
+          "kg": "70",
+          "reps": "9"
+        },
+        {
+          "kg": "70",
+          "reps": "9"
+        }
+      ]
+    },
+    "log_s2_d0_f1_e0": {
+      "sets": [
+        {
+          "kg": "100",
+          "reps": "7"
+        },
+        {
+          "kg": "100",
+          "reps": " 8"
+        },
+        {
+          "kg": "100",
+          "reps": "8"
+        },
+        {
+          "kg": "100",
+          "reps": "8"
+        }
+      ],
+      "comment": "Me costó más que s1"
+    },
+    "log_s2_d1_f1_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "33"
+        }
+      ],
+      "comment": "Hice 5 pausas caminando de menos de 1 min "
+    },
+    "log_s2_d2_f1_e0": {
+      "sets": [
+        {
+          "kg": "50",
+          "reps": "8"
+        },
+        {
+          "kg": "50",
+          "reps": "8"
+        },
+        {
+          "kg": "50",
+          "reps": "8"
+        },
+        {
+          "kg": "50",
+          "reps": "8"
+        }
+      ]
+    },
+    "log_s2_d2_f1_e2": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "10"
+        },
+        {
+          "kg": "15",
+          "reps": "10"
+        },
+        {
+          "kg": "15",
+          "reps": "10"
+        }
+      ],
+      "comment": "15kg por brazo el RPE me lo pase por el culo "
+    },
+    "log_s2_d2_f1_e1": {
+      "sets": [
+        {
+          "kg": "48",
+          "reps": "10"
+        },
+        {
+          "kg": "48",
+          "reps": "10"
+        },
+        {
+          "kg": "48",
+          "reps": "10"
+        },
+        {
+          "kg": "48",
+          "reps": "10"
+        }
+      ]
+    },
+    "log_s2_d2_f1_e4": {
+      "sets": [
+        {
+          "kg": "72",
+          "reps": "30m"
+        },
+        {
+          "kg": "72",
+          "reps": "30m"
+        },
+        {
+          "kg": "72",
+          "reps": "30m"
+        }
+      ]
+    },
+    "log_s2_d1_f2_e0": {
+      "sets": [
+        {
+          "kg": "4",
+          "reps": "500 mts "
+        }
+      ]
+    },
+    "log_s2_d1_f2_e1": {
+      "sets": [
+        {
+          "kg": "4",
+          "reps": "200 mts"
+        }
+      ]
+    },
+    "log_s2_d2_f2_e0": {
+      "comment": "Pelota 6 kg óptimo ",
+      "sets": [
+        {
+          "kg": "6",
+          "reps": "15"
+        },
+        {
+          "kg": "6",
+          "reps": "15"
+        },
+        {
+          "kg": "6",
+          "reps": "15"
+        }
+      ]
+    },
+    "log_s2_d2_f2_e1": {
+      "comment": "Bien de bien. Rápida recuperación luego de hacer los wall Ball y los burpees",
+      "sets": [
+        {
+          "kg": "",
+          "reps": "10"
+        },
+        {
+          "kg": "",
+          "reps": "10"
+        },
+        {
+          "kg": "",
+          "reps": "10"
+        }
+      ]
+    },
+    "log_s2_d3_f1_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "800"
+        },
+        {
+          "kg": "1",
+          "reps": "800"
+        },
+        {
+          "kg": "1",
+          "reps": "800"
+        },
+        {
+          "kg": "1",
+          "reps": "800"
+        },
+        {
+          "kg": "1",
+          "reps": "800"
+        }
+      ],
+      "comment": "Los 2min de trote fueron caminando y los 800 trote "
+    },
+    "log_s2_d3_f2_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "1000"
+        }
+      ],
+      "comment": "Con pausa a 600mts"
+    },
+    "log_s2_d2_f1_e3": {
+      "sets": [
+        {
+          "kg": "27.2",
+          "reps": "8"
+        },
+        {
+          "kg": "27.2",
+          "reps": "8"
+        },
+        {
+          "kg": "27.2",
+          "reps": "8"
+        }
+      ],
+      "comment": "Hoy cambie el jalón por dominadas con 27. 2 de asistencia "
+    },
+    "log_s1_d3_f1_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "800"
+        },
+        {
+          "kg": "1",
+          "reps": "800"
+        },
+        {
+          "kg": "1",
+          "reps": "800"
+        },
+        {
+          "kg": "1",
+          "reps": "800"
+        }
+      ],
+      "comment": "Trote y los 2min caminado "
+    },
+    "log_s1_d3_f2_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "1000"
+        }
+      ],
+      "comment": "Pausa a los 600mts"
+    },
+    "log_s1_d4_f1_e0": {
+      "sets": [
+        {
+          "kg": "70",
+          "reps": "9"
+        },
+        {
+          "kg": "70",
+          "reps": "9"
+        },
+        {
+          "kg": "70",
+          "reps": "9"
+        },
+        {
+          "kg": "70",
+          "reps": "9"
+        }
+      ]
+    },
+    "log_s1_d4_f1_e1": {
+      "sets": [
+        {
+          "kg": "60",
+          "reps": "8"
+        },
+        {
+          "kg": "60",
+          "reps": "8"
+        },
+        {
+          "kg": "60",
+          "reps": "8"
+        }
+      ],
+      "comment": "Lo podía cargar mas"
+    },
+    "log_s1_d4_f1_e2": {
+      "sets": [
+        {
+          "kg": "120",
+          "reps": "25"
+        },
+        {
+          "kg": "120",
+          "reps": "25"
+        },
+        {
+          "kg": "120",
+          "reps": "25"
+        },
+        {
+          "kg": "120",
+          "reps": "25"
+        }
+      ]
+    },
+    "log_s1_d5_f1_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "35"
+        }
+      ],
+      "comment": "Hice pausas 5 o 6 min total"
+    },
+    "log_s1_d5_f2_e0": {
+      "sets": [
+        {
+          "kg": "",
+          "reps": ""
+        }
+      ]
+    },
+    "log_s2_d5_f1_e0": {
+      "sets": [],
+      "comment": "Al final hice la carreta"
+    },
+    "log_s2_d0_f2_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "15 min"
+        }
+      ]
+    },
+    "log_s2_d0_f2_e1": {
+      "sets": [
+        {
+          "kg": "3",
+          "reps": "45 seg"
+        }
+      ]
+    },
+    "log_s3_d1_f1_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "39"
+        }
+      ],
+      "comment": ""
+    },
+    "log_s3_d1_f2_e0": {
+      "sets": [
+        {
+          "kg": "4",
+          "reps": "500"
+        }
+      ],
+      "comment": "Lo hice en ski"
+    },
+    "log_s3_d1_f2_e1": {
+      "sets": [
+        {
+          "kg": "4",
+          "reps": "200"
+        }
+      ]
+    },
+    "log_s3_d0_f1_e0": {
+      "sets": [
+        {
+          "kg": "100",
+          "reps": "8"
+        },
+        {
+          "kg": "100",
+          "reps": "9"
+        },
+        {
+          "kg": "100",
+          "reps": "9"
+        },
+        {
+          "kg": "100",
+          "reps": "8"
+        }
+      ]
+    },
+    "log_s3_d0_f1_e1": {
+      "sets": [
+        {
+          "kg": "80",
+          "reps": "10"
+        },
+        {
+          "kg": "80",
+          "reps": "10"
+        },
+        {
+          "kg": "80",
+          "reps": "10"
+        },
+        {
+          "kg": "80",
+          "reps": "10"
+        }
+      ]
+    },
+    "log_s3_d0_f1_e2": {
+      "sets": [
+        {
+          "kg": "30",
+          "reps": "12"
+        },
+        {
+          "kg": "30",
+          "reps": "12"
+        },
+        {
+          "kg": "30",
+          "reps": "12"
+        }
+      ]
+    },
+    "log_s3_d0_f1_e3": {
+      "sets": [
+        {
+          "kg": "70",
+          "reps": "12"
+        },
+        {
+          "kg": "70",
+          "reps": "12"
+        },
+        {
+          "kg": "70",
+          "reps": "12"
+        }
+      ]
+    },
+    "log_s3_d0_f2_e0": {
+      "sets": [
+        {
+          "kg": "1",
+          "reps": "15min"
+        }
+      ],
+      "comment": "15 min, bien. "
+    },
+    "log_s3_d0_f2_e1": {
+      "sets": [
+        {
+          "kg": "3",
+          "reps": "45seg"
+        }
+      ],
+      "comment": "Bien"
+    },
+    "log_s3_d2_f1_e0": {
+      "sets": [
+        {
+          "kg": "50",
+          "reps": "8"
+        },
+        {
+          "kg": "50",
+          "reps": "8"
+        },
+        {
+          "kg": "50",
+          "reps": "8"
+        },
+        {
+          "kg": "50",
+          "reps": "8"
+        }
+      ],
+      "comment": "No he podido subir de peso me cuesta superarme en este ejercicio "
+    },
+    "log_s3_d2_f1_e2": {
+      "sets": [
+        {
+          "kg": "12.5",
+          "reps": "10"
+        },
+        {
+          "kg": "12.5",
+          "reps": "10"
+        },
+        {
+          "kg": "12.5",
+          "reps": "10"
+        }
+      ],
+      "comment": "Hice 3 series de 10 con banco en 80°  y 2 de 10 en 60°\n"
+    },
+    "log_s3_d2_f1_e1": {
+      "sets": [
+        {
+          "kg": "48",
+          "reps": "10"
+        },
+        {
+          "kg": "48",
+          "reps": "10"
+        },
+        {
+          "kg": "48",
+          "reps": "10"
+        },
+        {
+          "kg": "48",
+          "reps": "10"
+        }
+      ],
+      "comment": ""
+    },
+    "log_s3_d2_f1_e3": {
+      "sets": [
+        {
+          "kg": "54.4",
+          "reps": "8"
+        },
+        {
+          "kg": "54.4",
+          "reps": "8"
+        },
+        {
+          "kg": "54.4",
+          "reps": "8"
+        }
+      ],
+      "comment": ""
+    }
+  },
+  "videos": {
+    "Activacion de core": "https://youtube.com/shorts/rxmFcotNO-U?feature=share",
+    "Activacion glutea": "https://youtube.com/shorts/279oZPTSNb4?feature=share",
+    "Burpee broad jump": "https://youtube.com/shorts/eVA_vHXe8NI?feature=share",
+    "Caminata": "",
+    "Caminata de recuperacion": "",
+    "Caminata extendida + hidratacion": "",
+    "Caminata extendida de recuperacion": "",
+    "Cardio suave": "",
+    "Carrera": "",
+    "Carrera Z2 continua": "",
+    "Carrera a ritmo de competencia": "",
+    "Carrera continua Z2": "",
+    "Carrera continua a ritmo objetivo": "",
+    "Carrera corta": "",
+    "Carrera corta entre series": "",
+    "Carrera corta post-intervalos": "",
+    "Carrera corta post-sled": "",
+    "Carrera larga con progresion": "",
+    "Carrera larga continua": "",
+    "Circuito de movilidad completo": "",
+    "Core circuito": "",
+    "Dominadas lastradas o jalon al pecho": "https://youtube.com/shorts/cwYggf6ytn8?feature=share",
+    "Dominadas o jalon al pecho": "https://youtube.com/shorts/BUFD8BAXgI4?feature=share",
+    "Empuje de trineo (sled push)": "https://youtube.com/shorts/E8-sp-toDdQ?feature=share",
+    "Estiramiento cuadriceps y psoas": "",
+    "Estiramiento de cadena posterior": "",
+    "Estiramiento de pectoral y dorsal": "",
+    "Estiramiento full body": "",
+    "Estiramiento general full body": "",
+    "Estiramiento isquiotibiales y gluteo": "",
+    "Estiramiento suave general": "",
+    "Farmers carry": "https://youtube.com/shorts/2RIk4xfjB6o?feature=share",
+    "Hip thrust con barra": "https://youtube.com/shorts/TOddmXY9-0g?feature=share",
+    "Intervalos a ritmo objetivo de carrera Hyrox": "",
+    "Intervalos en umbral": "",
+    "Liberacion miofascial (foam roller)": "",
+    "Liberacion miofascial completa": "",
+    "Lunges con mancuernas": "https://youtube.com/shorts/eM5Dwpl2BwU?feature=share",
+    "Movilidad de cadera": "",
+    "Movilidad de tobillo": "",
+    "Movilidad dinamica corta": "",
+    "Movilidad dinamica de cierre": "",
+    "Movilidad general de cierre semanal": "",
+    "Pallof press": "https://youtube.com/shorts/PJa3GBk1GA4?feature=share",
+    "Peso muerto convencional": "https://youtube.com/shorts/MXIyf6B4iKw?feature=share",
+    "Peso muerto rumano (RDL)": "https://youtube.com/shorts/Z5hRRFfBKE0?feature=share",
+    "Plancha con tirantes (RKC plank)": "",
+    "Plancha frontal": "https://youtube.com/shorts/kxcWa7_OQDE?feature=share",
+    "Press banca con barra": "https://youtube.com/shorts/VTNjvSFZTgM?feature=share",
+    "Press banca inclinado con mancuernas": "https://youtube.com/shorts/CqFQg5I_FJs?feature=share",
+    "Press militar con mancuernas": "https://youtube.com/shorts/U2sffyAUO4E?feature=share",
+    "Remo con barra (Pendlay o Yates)": "https://youtube.com/shorts/xi8L6x8a0Ec?feature=share",
+    "Remo continuo": "https://youtube.com/shorts/3zAmoMvdWh8?feature=share",
+    "Remo unilateral con mancuerna": "https://youtube.com/shorts/6yuuYUZk9WQ?feature=share",
+    "Sentadilla frontal": "https://youtube.com/shorts/ToKkK00B1c0?feature=share",
+    "Sentadilla goblet o frontal": "https://youtube.com/shorts/Tauq8thd8bQ?feature=share",
+    "Sentadilla trasera (back squat)": "https://youtube.com/shorts/3MfZTW5L8CI?feature=share",
+    "SkiErg": "https://youtube.com/shorts/soAfE1iKuzk?feature=share",
+    "Skipping + talones a gluteo": "",
+    "Sled pull": "https://youtube.com/shorts/gbJCuzVlGjA?feature=share",
+    "Sled push": "https://youtube.com/shorts/E8-sp-toDdQ?feature=share",
+    "Strides cortos": "",
+    "Strides progresivos": "",
+    "Trote suave": "",
+    "Wall balls": "https://youtube.com/shorts/ApWNHazA2_A?feature=share",
+    "Zancadas búlgaras": "https://youtube.com/shorts/gfAnB7B7xnQ?feature=share",
+    "Zancadas con mancuernas (walking lunges)": "https://youtube.com/shorts/eM5Dwpl2BwU?feature=share",
+    "calentamiento__mov1": "https://youtube.com/shorts/SyrLL9Izz9E?feature=share",
+    "calentamiento__mov2": "https://youtube.com/shorts/Ybo59L65WXA?feature=share",
+    "calentamiento__mov3": "https://youtube.com/shorts/bdLk-EettCo?feature=share",
+    "calentamiento__mov4": "https://youtube.com/shorts/hOqbBs7L6wA?feature=share",
+    "calentamiento__core1": "https://youtube.com/shorts/VunNdAlB4U4?feature=share",
+    "calentamiento__core2": "https://youtube.com/shorts/sQvpcIDZ5KI?feature=share",
+    "calentamiento__core3": "https://youtube.com/shorts/AB7OXvB2dK0?feature=share",
+    "Arrastre de trineo (sled pull)": "https://youtube.com/shorts/gbJCuzVlGjA?feature=share"
+  },
+  "sessionDone": {
+    "s1_d0_done": true,
+    "s1_d1_done": true,
+    "s1_d2_done": true,
+    "s2_d0_done": true,
+    "s2_d2_done": true,
+    "s2_d1_done": true,
+    "s2_d3_done": true,
+    "s1_d3_done": true,
+    "s1_d5_done": true,
+    "s2_d5_done": true,
+    "s3_d1_done": true,
+    "s3_d0_done": true,
+    "s2_d2__done": true,
+    "s3_d0__done": true,
+    "s3_d1__done": true,
+    "s3_d2__done": true,
+    "s3_d3__done": true,
+    "s3_d5__done": true
+  }
+}
