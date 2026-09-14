@@ -1,0 +1,1844 @@
+<!DOCTYPE html>
+<!-- Build: 2026-09-13 03:09:47 -->
+<!--  2026-09-13 01:59:01 -->
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Método CEO — Bryan Araujo · Ciclo 2</title>
+<style>
+
+
+
+:root{
+  --font-main:'Outfit',sans-serif;
+  --font-mono:'Space Mono',monospace;
+  --ceo-blue:#82b7d9;--ceo-gold:#5a4800;--ceo-gold-light:#8c6f00;--ceo-gold-dim:rgba(90,72,0,.18);--ceo-blue-dim:rgba(130,183,217,.12);
+  --bg:#0a0a0a; --surface:#161616; --surface2:#1d1d1d; --surface3:#232323;
+  --border:#2b2b2b; --accent:#82b7d9; --accent-dim:#0f1e2d;
+  --lime:#82b7d9; --text:#f2f0ec; --dim:#9a9a96; --faint:#5e5e5b;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100%;}
+button{cursor:pointer;font-family:inherit;border:none;background:none;}
+input,textarea{font-family:inherit;}
+input::placeholder,textarea::placeholder{color:var(--faint);}
+.mono{font-family:'JetBrains Mono','Courier New',monospace;letter-spacing:.04em;}
+.display{font-family:'Barlow Condensed',system-ui,sans-serif;text-transform:uppercase;letter-spacing:.01em;}
+.scroll::-webkit-scrollbar{height:6px;width:6px;}
+.scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px;}
+
+/* Layout */
+#header{padding:18px;border-bottom:1px solid var(--border);}
+#header-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;}
+#header-btns{display:flex;gap:6px;flex-wrap:wrap;}
+#import-msg{margin-top:10px;padding:9px 12px;border-radius:7px;font-size:12.5px;display:none;}
+#import-msg.ok{background:rgba(130,183,217,.08);border:1px solid var(--lime);color:var(--lime);display:block;}
+#import-msg.err{background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);display:block;}
+#progress-bar-wrap{margin-top:16px;}
+#progress-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;}
+#progress-segs{display:flex;gap:4px;}
+.prog-seg{flex:1;height:5px;border-radius:2px;background:var(--surface3);}
+.prog-seg.done{background:var(--accent);}
+#main-tabs{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap;}
+#content{padding:20px 18px 40px;}
+
+/* Tab buttons */
+.tab-btn{flex:1;min-width:90px;padding:11px 16px;border-radius:8px;font-size:14px;font-weight:600;
+  border:1px solid var(--border);background:var(--surface);color:var(--dim);transition:all .15s;}
+.tab-btn.active{border-color:var(--text);background:var(--text);color:#0a0a0a;}
+
+/* Week selector */
+#week-selector{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:18px;}
+.week-btn{min-width:44px;padding:9px 0;border-radius:7px;font-size:13px;font-weight:700;
+  border:1px solid var(--border);background:var(--surface);color:var(--dim);transition:all .15s;}
+.week-btn.active{border-color:var(--accent);background:var(--accent);color:#04202E;}
+
+/* Block card */
+#block-card{background:var(--surface);border-left:3px solid var(--accent);border-radius:8px;padding:14px 16px;margin-bottom:18px;}
+#block-label{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px;}
+#block-focus{font-size:14.5px;color:var(--text);}
+
+/* Day tabs */
+#day-tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:18px;padding-bottom:2px;}
+.day-btn{padding:9px 16px;border-radius:7px;white-space:nowrap;font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:7px;border:1px solid var(--border);background:var(--surface);
+  color:var(--dim);transition:all .15s;}
+.day-btn.active{border-color:var(--accent);background:var(--accent);color:#04202E;}
+.day-dot{width:6px;height:6px;border-radius:50%;background:var(--faint);flex-shrink:0;}
+.day-btn.active .day-dot{background:#fff;}
+
+/* Session */
+#session-badge{display:flex;justify-content:flex-end;margin-bottom:10px;}
+.badge{display:inline-block;padding:4px 10px;border-radius:5px;font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+.badge-accent{background:var(--accent-dim);color:var(--accent);border:1px solid var(--accent);}
+#session-title{font-size:26px;font-weight:700;line-height:1.1;margin-bottom:16px;}
+.coach-note{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:13.5px;line-height:1.6;}
+.coach-note strong{color:var(--lime);}
+
+/* Phase labels */
+.phase-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ceo-blue);margin:16px 0 8px 0;padding:8px 12px;background:rgba(130,183,217,.06);border-radius:8px;font-weight:600;display:flex;align-items:center;gap:6px;}
+.warmup-list{font-size:13.5px;line-height:1.6;color:var(--dim);padding-left:18px;margin-bottom:18px;}
+.phase-d{padding:12px 14px;background:var(--surface);border-radius:8px;font-size:12.5px;
+  color:var(--dim);border-left:3px solid var(--accent);margin-top:6px;}
+.phase-d strong{color:var(--text);}
+
+/* Superserie — contenedor visual que agrupa sus ejercicios, distinto de las tarjetas sueltas */
+.supersetie-group{border:2px solid var(--ceo-gold-light);border-radius:12px;padding:10px 10px 4px 10px;margin-bottom:14px;background:rgba(90,72,0,.05);}
+.superserie-label{font-size:12.5px;font-weight:700;color:var(--ceo-gold-light);margin-bottom:8px;letter-spacing:.02em;}
+.superserie-instructions{font-size:12px;color:var(--dim);line-height:1.6;background:var(--surface2);
+  border-radius:8px;padding:10px 12px;margin-bottom:10px;}
+.superserie-instructions strong{color:var(--text);}
+.superserie-instructions em{color:var(--ceo-gold-light);font-style:normal;}
+.supersetie-group .ex-card{margin-bottom:8px;}
+.supersetie-group .ex-card:last-child{margin-bottom:0;}
+
+/* Exercise card */
+.ex-card{background:var(--surface);border-radius:10px;padding:14px 16px;margin-bottom:10px;}
+.ex-card.normal{border:1px solid var(--border);}
+.ex-top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:6px;}
+.ex-name{font-weight:700;font-size:15.5px;color:var(--text);display:flex;align-items:center;gap:8px;}
+.ex-pills{display:flex;gap:6px;flex-wrap:wrap;}
+.pill{display:inline-block;padding:4px 10px;border-radius:5px;font-family:'JetBrains Mono',monospace;
+  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  border:1px solid var(--border);color:var(--dim);}
+.pill-accent{border-color:var(--accent);color:var(--accent);background:var(--accent-dim);}
+.ex-rest{font-size:12.5px;color:var(--dim);}
+.ex-note{font-size:12.5px;color:var(--text);margin-top:8px;padding:9px 11px;
+  background:var(--surface2);border-radius:7px;border-left:3px solid var(--lime);}
+
+/* Video field */
+.video-row{display:flex;align-items:center;gap:6px;margin-top:8px;}
+.video-input{flex:1;min-width:0;font-size:12.5px;padding:7px 9px;
+  border:1px solid var(--border);border-radius:6px;background:var(--surface2);color:var(--text);}
+.video-link{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);
+  text-decoration:none;border:1px solid var(--accent);border-radius:6px;padding:6px 9px;
+  letter-spacing:.03em;white-space:nowrap;}
+.video-saved{font-size:11px;color:var(--lime);}
+
+/* Log table */
+.log-section{margin-top:14px;}
+.log-table{width:100%;border-collapse:collapse;min-width:280px;}
+.log-th{padding:4px 6px;font-size:11px;color:var(--faint);text-align:left;font-weight:600;}
+.log-tr{border-top:1px solid #1f1f1f;}
+.log-td{padding:6px;}
+.log-num{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--dim);}
+.log-input{width:60px;padding:6px 7px;font-size:13px;border:1px solid var(--border);
+  border-radius:6px;background:var(--surface2);color:var(--text);}
+.log-input.wide{width:70px;}
+.log-comment{width:100%;margin-top:8px;font-size:12.5px;padding:9px;min-height:44px;
+  border:1px solid var(--border);border-radius:7px;background:var(--surface2);color:var(--text);resize:vertical;}
+
+/* Done button */
+.done-btn{font-size:12.5px;padding:9px 16px;border-radius:6px;font-weight:700;
+  font-family:'JetBrains Mono',monospace;letter-spacing:.04em;text-transform:uppercase;
+  white-space:nowrap;cursor:pointer;transition:all .15s;}
+.done-btn.undone{border:1px solid var(--lime);background:transparent;color:var(--lime);}
+.done-btn.done{border:1px solid var(--lime);background:var(--lime);color:#0a0a0a;}
+.session-header{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:14px;margin-bottom:16px;}
+
+/* Progression note */
+.prog-note{margin-top:22px;padding:14px 16px;background:var(--surface);
+  border:1px dashed var(--border);border-radius:10px;}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.stat-card.full{grid-column:1/-1;}
+.stat-num{font-size:32px;font-weight:800;line-height:1;font-family:system-ui,sans-serif;}
+.stat-label{font-size:12px;color:var(--dim);margin-top:4px;}
+.block-bar{height:6px;border-radius:3px;background:var(--surface3);overflow:hidden;margin-top:8px;}
+.block-bar-fill{height:100%;background:var(--accent);border-radius:3px;}
+
+/* Header btn styles */
+.hbtn{font-family:'JetBrains Mono',monospace;font-size:11px;padding:8px 12px;border-radius:6px;
+  letter-spacing:.06em;white-space:nowrap;cursor:pointer;transition:all .12s;}
+.hbtn-lime{border:1px solid var(--lime);background:transparent;color:var(--lime);}
+.hbtn-dim{border:1px solid var(--border);background:transparent;color:var(--dim);}
+
+/* Student name */
+#student-name-display{color:var(--accent);cursor:pointer;border-bottom:1px dashed var(--accent);font-size:inherit;}
+#student-name-input{font-size:19px;font-weight:700;color:var(--accent);background:var(--surface);
+  border:1px solid var(--accent);border-radius:5px;padding:2px 8px;text-transform:uppercase;
+  min-width:160px;display:none;}
+
+.video-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px;}
+.video-modal-overlay.active{display:flex;}
+.video-modal-content{position:relative;width:100%;max-width:640px;}
+.video-modal-close{position:absolute;top:-42px;right:0;background:none;border:1px solid var(--lime);color:var(--lime);border-radius:7px;padding:6px 14px;font-size:16px;cursor:pointer;font-family:inherit;}
+.video-modal-iframe-wrap{position:relative;width:100%;padding-top:56.25%;border-radius:10px;overflow:hidden;background:#000;}
+.video-modal-iframe-wrap.vertical{padding-top:0;height:78vh;max-width:340px;margin:0 auto;}
+#video-modal-iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none;}
+
+.ceo-selector{background:#101010;border:1px solid rgba(130,183,217,.2);border-radius:14px;padding:20px;margin-bottom:20px;}
+.ceo-selector-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ceo-blue);font-weight:600;margin-bottom:14px;}
+.ceo-row{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.ceo-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin-bottom:6px;}
+.ceo-btn{flex:1;min-width:80px;padding:10px 8px;border-radius:8px;border:1px solid rgba(130,183,217,.2);background:#161616;color:var(--dim);font-size:12px;font-weight:600;cursor:pointer;text-align:center;transition:all .15s;font-family:inherit;}
+.ceo-btn:hover{border-color:var(--ceo-blue);color:var(--ceo-blue);}
+.ceo-btn.active-time{border-color:var(--ceo-blue);background:var(--ceo-blue-dim);color:var(--ceo-blue);}
+.ceo-btn.active-energy{border-color:var(--ceo-gold-light);background:var(--ceo-gold-dim);color:var(--ceo-gold-light);}
+.ceo-session-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;}
+.ceo-badge-reduced{background:rgba(90,72,0,.18);border:1px solid rgba(140,111,0,.4);color:#a87f00;}
+.ceo-badge-minimal{background:rgba(255,140,0,.1);border:1px solid rgba(255,140,0,.3);color:#ff9f2e;}
+.ceo-mod-note{background:rgba(90,72,0,.1);border-left:3px solid var(--ceo-gold-light);border-radius:0 8px 8px 0;padding:10px 12px;margin-bottom:12px;font-size:12.5px;color:#c89f00;line-height:1.6;}
+.ceo-mod-note strong{display:block;margin-bottom:3px;color:var(--ceo-gold-light);}
+.ceo-mark{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--ceo-gold-light);opacity:.8;}
+.recipe-card{background:#111;border:1px solid rgba(130,183,217,.15);border-radius:12px;padding:18px;margin-bottom:16px;}
+.recipe-name{font-size:16px;font-weight:700;color:var(--ceo-blue);margin-bottom:4px;}
+.recipe-tag{display:inline-block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;background:var(--ceo-blue-dim);color:var(--ceo-blue);border:1px solid rgba(130,183,217,.3);margin-bottom:10px;}
+.recipe-section{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);margin:10px 0 6px 0;}
+.recipe-ing,.recipe-steps{font-size:13px;color:var(--text);line-height:1.8;}
+.recipe-macro{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap;}
+.recipe-macro-pill{background:#1a1a1a;border:1px solid var(--border);border-radius:6px;padding:4px 10px;font-size:11px;color:var(--dim);}
+.recipe-macro-pill span{color:var(--ceo-blue);font-weight:700;}
+
+
+.mono, .phase-label, .week-btn, .rir-badge, .pill, .badge,
+.ex-pills span, .prog-note .phase-label,
+#block-label, #block-focus { font-family:'Space Mono',monospace !important; }
+body, button, input, textarea, select { font-family:'Outfit',sans-serif; }
+h1, h2, h3, .plan-name, #session-title { font-family:'Outfit',sans-serif; letter-spacing:-.02em; }
+.ceo-selector-title, .ceo-label, .recipe-tag, .recipe-section { font-family:'Space Mono',monospace; }
+
+
+
+.ciclo-wrap{margin-bottom:14px;border:1px solid rgba(130,183,217,.15);border-radius:10px;overflow:hidden;}
+.ciclo-header{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;cursor:pointer;background:rgba(130,183,217,.05);}
+.ciclo-title{font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:#c49fd8;}
+.ciclo-toggle{font-size:11px;color:var(--dim);}
+.ciclo-body{display:none;padding:14px 16px;border-top:1px solid rgba(130,183,217,.1);}
+.ciclo-intro{font-size:13px;color:var(--dim);line-height:1.7;margin-bottom:14px;font-style:italic;}
+.ciclo-item{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(43,43,43,.6);}
+.ciclo-item:last-child{margin-bottom:0;padding-bottom:0;border-bottom:none;}
+.ciclo-item-title{font-size:13px;font-weight:700;color:#c49fd8;margin-bottom:5px;}
+.ciclo-item-text{font-size:13px;color:var(--text);line-height:1.75;}
+
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="video-modal-overlay" class="video-modal-overlay" onclick="if(event.target===this) closeVideoModal()">
+  <div class="video-modal-content">
+    <button class="video-modal-close" onclick="closeVideoModal()">✕ Cerrar</button>
+    <div id="video-modal-iframe-wrap" class="video-modal-iframe-wrap">
+      <iframe id="video-modal-iframe" src="" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>
+    </div>
+  </div>
+</div>
+
+<div id="header">
+  <div id="header-top">
+    <div style="flex:1 1 auto;min-width:200px;">
+      <div class="display" style="font-size:19px;font-weight:700;display:flex;flex-wrap:wrap;align-items:center;gap:8px;">
+        <span>PLAN PERSONALIZADO</span>
+        <span id="student-name-display" onclick="startEditName()"></span>
+        <input id="student-name-input" type="text" placeholder="NOMBRE" onblur="commitName()" onkeydown="if(event.key==='Enter')commitName()"/>
+      </div>
+    </div>
+    <div id="header-btns">
+      <button class="hbtn" onclick="reloadProgress()" style="border-color:var(--dim);color:var(--dim);font-size:11px;">🔄 Cargar mis datos</button>
+    </div>
+      <button class="hbtn hbtn-dim" onclick="resetAll()">REINICIAR DATOS</button>
+    </div>
+  </div>
+  <div id="readonly-banner" style="display:none;margin-top:10px;padding:9px 12px;border-radius:7px;font-size:12.5px;background:var(--accent-dim);border:1px solid var(--accent);color:var(--accent);">Modo lectura activado — no se puede editar nada en este dispositivo, y no se sube nada a la nube por accidente.</div>
+  <div id="date-range-wrap" class="mono" style="margin-top:8px;font-size:12px;color:var(--faint);">
+    RANGO: <span id="date-range" onclick="startEditDate()" style="cursor:pointer;color:var(--accent);border-bottom:1px dashed var(--accent);">—</span>
+    <input id="date-input" type="date" style="display:none;font-size:12px;background:var(--surface2);color:var(--text);border:1px solid var(--border);border-radius:6px;padding:3px 6px;" onchange="commitDate()"/>
+  </div>
+  <div id="progress-bar-wrap">
+    <div id="progress-label">
+      <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;">PROGRESO DEL PLAN</div>
+      <div class="mono" style="font-size:13px;font-weight:700;"><span id="completed-count" style="color:var(--lime);">0</span><span style="color:var(--faint);"> / 8 SEMANAS</span></div>
+    </div>
+    <div id="progress-segs" class="prog-segs"></div>
+  </div>
+  <div id="main-tabs">
+    <button class="tab-btn active" data-tab="plan" onclick="switchTab('plan')">Plan</button>
+    <button class="tab-btn" data-tab="stats" onclick="switchTab('stats')">Stats</button>
+    <button class="tab-btn" data-tab="recetas" onclick="switchTab('recetas')">Recetas Fitness</button>
+  </div>
+</div>
+
+<div id="content"></div>
+
+<script>
+'use strict';
+
+/* ════════════════════════════════════════════════════════════════════
+   CONFIGURACIÓN DEL ALUMNO — esto es lo único que hay que tocar para
+   armar un plan nuevo a partir de este template. Todo lo que sigue
+   más abajo es el motor genérico del Método CEO, ya probado — no
+   debería tocarse salvo que sea a propósito y sabiendo qué se cambia.
+   ════════════════════════════════════════════════════════════════════ */
+const STUDENT_NAME      = 'Bryan Araujo';
+const STUDENT_SLUG      = 'bryan';
+const STUDENT_IS_FEMALE = false;
+const WORKER_REPO       = 'PlanOnline-Bryan';
+const APP_TAG           = 'plan-' + STUDENT_SLUG + '-ceo-c2';
+/* ════════════════════════════════════════════════════════════════════ */
+
+const PREFIX = STUDENT_SLUG + 'ceo2_';
+function storageGet(key,fallback){try{const v=localStorage.getItem(PREFIX+key);return v!==null?JSON.parse(v):fallback;}catch(e){return fallback;}}
+function storageSet(key,val){try{localStorage.setItem(PREFIX+key,JSON.stringify(val));}catch(e){}}
+
+(function(){
+  const K='__'+STUDENT_SLUG+'ceo2_v1__';
+  if(!localStorage.getItem(K)){Object.keys(localStorage).forEach(k=>{if(k.startsWith(STUDENT_SLUG))localStorage.removeItem(k);});localStorage.setItem(K,'1');}
+})();
+
+let state = {
+  tab: 'plan', week: 1, day: 0,
+  studentName: storageGet('studentName', STUDENT_NAME),
+  planStart: storageGet('planStart', ''),
+  logData: storageGet('logData', {}),
+  logDataC1: {},
+  videos: storageGet('videos', {}),
+  sessionDone: storageGet('sessionDone', {}),
+};
+
+function isReadOnlyMode() { return false; }
+function save() {
+  storageSet('logData', state.logData);
+  storageSet('sessionDone', state.sessionDone);
+  storageSet('planStart', state.planStart);
+  if(save._t) clearTimeout(save._t);
+  save._t = setTimeout(()=>ghSaveProgress(), 4000);
+}
+
+/* ============================================================ GITHUB PROGRESS SYNC */
+const WORKER_URL = 'https://impetus-sync.martinmamchur.workers.dev';
+
+function showSyncMsg(text,type){const el=document.getElementById('sync-msg');if(!el)return;el.textContent=text;el.style.color=type==='ok'?'var(--ceo-blue)':type==='err'?'#ff6b6b':'var(--dim)';if(text)setTimeout(()=>{el.textContent='';},3000);}
+
+async function ghLoadProgress(){try{const res=await fetch(WORKER_URL+'?repo='+WORKER_REPO+'&file=progreso_c2.json&t='+Date.now());if(!res.ok)return null;return await res.json();}catch(e){return null;}}
+async function ghLoadCiclo1(){try{const res=await fetch(WORKER_URL+'?repo='+WORKER_REPO+'&file=progreso.json&t='+Date.now());if(!res.ok)return null;return await res.json();}catch(e){return null;}}
+async function ghSaveProgress(){showSyncMsg('Sincronizando...','');const data={app:APP_TAG,exportedAt:new Date().toISOString(),planStart:state.planStart,logData:state.logData,videos:state.videos,sessionDone:state.sessionDone};try{const res=await fetch(WORKER_URL+'?repo='+WORKER_REPO+'&file=progreso_c2.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});if(res.ok){showSyncMsg('☁ Sincronizado','ok');}else{showSyncMsg('✗ Error ('+res.status+')','err');}}catch(e){showSyncMsg('✗ Error','err');}}
+async function reloadProgress(){
+  showSyncMsg('Actualizando...','');
+  try {
+    const p = await ghLoadProgress();
+    if(p && p.logData && p.app===APP_TAG){
+      state.logData=p.logData; state.sessionDone=p.sessionDone||{};
+      if(p.planStart) state.planStart=p.planStart;
+      storageSet('logData',state.logData); storageSet('sessionDone',state.sessionDone); storageSet('planStart',state.planStart);
+    }
+    const c1 = await ghLoadCiclo1();
+    if(c1 && c1.logData) state.logDataC1 = c1.logData;
+    renderHeader(); renderPlan();
+    showSyncMsg('✓ Actualizado','ok');
+  } catch(e){ showSyncMsg('✗ Error','err'); }
+}
+
+async function ghGetVideos() {
+  try {
+    const res = await fetch(WORKER_URL+'?repo='+WORKER_REPO+'&file=videos.json&t='+Date.now());
+    if (!res.ok) return null;
+    return await res.json();
+  } catch(e) { return null; }
+}
+
+async function ghSaveVideos(videos) {
+  try {
+    const res = await fetch(WORKER_URL+'?repo='+WORKER_REPO+'&file=videos.json', {
+      method: 'PUT',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(videos)
+    });
+    return res.ok;
+  } catch(e) { return false; }
+}
+
+/* ============================================================
+   PROGRAM DATA
+   ============================================================ */
+
+/* ============================================================
+   PROGRAM DATA — Bryan Araujo, Ciclo 2. Entrenamiento híbrido (fuerza +
+   carrera + estaciones Hyrox), 6 días/semana, continuación de su C1 de
+   17 semanas que cerró con una carrera Hyrox. Este C2 arranca un ciclo
+   nuevo: Bloque 1 reconstruye volumen de fuerza (que bajó en el taper)
+   con base aeróbica moderada; Bloque 2 reintroduce calidad de carrera
+   y densidad Hyrox, replicando la progresión que ya le funcionó en su C1.
+   ============================================================ */
+const MESOCYCLES = [
+  { id:'m1', name:'Bloque 1', subtitle:'Hipertrofia general + detox de trabajo específico', weeks:[1,2,3,4], focus:'Volumen de fuerza para masa muscular + cardio general para pérdida de grasa · sin trineo/ski — foco 100% en construir, no en rendimiento de competencia · RIR 2' },
+  { id:'m2', name:'Bloque 2', subtitle:'Hipertrofia + introducción a potencia/pliometría', weeks:[5,6,7,8], focus:'Se suma un día de potencia y pliometría (base para una futura prep híbrida) + un toque puntual y liviano de herramienta híbrida · RIR 1' },
+];
+
+function ex(name,sets,reps,rir,rest,opts){return{name,sets,reps,rir,rest,...(opts||{})};}
+
+const WEEK_PROGRESSION_NOTES = {
+  1:'Semana 1 — Arrancás un bloque distinto al de la competencia: foco en masa muscular general y pérdida de grasa, sin trineo ni ski por ahora. Cargas conservadoras (RIR 2 real) y cardio en Z2 — es un "detox" del trabajo específico, no una sesión más de lo mismo.',
+  2:'Semana 2 — Si la técnica fue sólida, subí 2.5-5 kg en los básicos. En cardio, mismo esquema, un poco más de tiempo en zona.',
+  3:'Semana 3 — Doble progresión en los básicos. El volumen de hipertrofia empieza a acumularse — es normal sentir más "bombeo" que antes.',
+  4:'Semana 4 — Consolidación del bloque. RIR 1-2 en básicos. Última semana de detox puro antes de sumar potencia/pliometría.',
+  5:'Semana 5 — Bloque 2: se suma un día de potencia y pliometría — volumen bajo, foco en calidad de aterrizaje y técnica, no en fatiga. Es la base para que cuando vuelvas a prepararte para una competencia híbrida, arranques con mejor capacidad explosiva.',
+  6:'Semana 6 — Progresión en básicos de fuerza. En el día de potencia, si la técnica de aterrizaje fue limpia, podés sumar una serie más — nunca vamos a buscar el fallo acá.',
+  7:'Semana 7 — Pico de volumen del bloque de hipertrofia. El día de potencia ya debería sentirse más natural.',
+  8:'Semana 8 — Cierre del ciclo. En básicos, PR técnico si el cuerpo lo permite. Este es un buen punto para decidir con tu coach si arrancás una prep específica de competencia o seguís otro bloque de base.',
+};
+
+// ── DÍAS DEL PLAN — Bryan (mismo split de 6 días, contenido redefinido) ──
+// Día 1 Fuerza tren inferior + abdomen · Día 2 Cardio general + abdomen ·
+// Día 3 Fuerza tren superior + abdomen · Día 4 Cardio metabólico ·
+// Día 5 Full body hipertrofia (sin trineo/ski en Bloque 1) ·
+// Día 6 Cardio general moderado
+//
+// dayType:'carrera' + runType 'continuo' se reusa acá para CUALQUIER
+// cardio de baja intensidad sostenida (bici, remo, caminadora, no
+// necesariamente correr) — el mecanismo de adaptación (ajustar duración
+// según tiempo, mantener zona) aplica igual sea cual sea la herramienta.
+// runType 'intervalos' se reusa para el día de cardio metabólico.
+// Sin dayType → badge "Fuerza" (motor estándar de sets/RIR).
+
+// ── BLOQUE 1 (Sem 1-4) — Hipertrofia general + detox de trabajo específico ──
+const C2_M1_D1 = {
+  dayLabel:'Día 1', dayFocus:'Fuerza tren inferior + abdomen',
+  blockB:[
+    ex('Sentadilla trasera (back squat)',4,'8-10','RIR 2','2:30 min'),
+    ex('Peso muerto rumano (RDL)',4,'8-10','RIR 2','2 min'),
+  ],
+  blockC:[
+    ex('Zancadas con mancuernas (walking lunges)',3,'12 c/pierna','RIR 2','90 seg'),
+    ex('Hip thrust con barra',3,'10-12','RIR 2','90 seg'),
+    ex('Elevación de piernas colgado',3,'12-15','RIR 1-2','60 seg',{notes:'Trabajo directo de abdomen — controlado, sin balanceo.'}),
+  ],
+  phaseD:'Estiramiento de cuádriceps y psoas + isquios y glúteo (2×30 seg c/lado) + foam roller.',
+};
+const C2_M1_D2 = {
+  dayLabel:'Día 2', dayType:'carrera', runType:'continuo', dayFocus:'Cardio general (bici/remo/caminadora) + abdomen',
+  blockB:[
+    ex('Cardio a elección (bici, remo o caminadora)',1,'25 min','Z2 (RPE 4-5)','—',{notes:'Ritmo conversacional. El objetivo es gasto calórico sostenido para pérdida de grasa, no rendimiento — elegí lo que te resulte más cómodo hoy.'}),
+  ],
+  blockC:[
+    ex('Crunch en polea (cable crunch)',3,'15','RPE 6','45 seg'),
+    ex('Plancha frontal',3,'40-50 seg','RPE 6','45 seg'),
+  ],
+  phaseD:'Caminata de recuperación 3-5 min + estiramiento general.',
+};
+const C2_M1_D3 = {
+  dayLabel:'Día 3', dayFocus:'Fuerza tren superior + abdomen',
+  blockB:[
+    ex('Press banca con barra',4,'8-10','RIR 2','2:30 min'),
+    ex('Remo con barra (Pendlay o Yates)',4,'8-10','RIR 2','2 min'),
+  ],
+  blockC:[
+    ex('Press militar con mancuernas',3,'10','RIR 2','90 seg'),
+    ex('Dominadas o jalón al pecho',3,'8-10','RIR 2','90 seg'),
+    ex('Russian twist con peso',3,'15 c/lado','RIR 1-2','45 seg'),
+  ],
+  phaseD:'Estiramiento de pectoral y dorsal + foam roller (cuádriceps, gemelos, dorsal).',
+};
+const C2_M1_D4 = {
+  dayLabel:'Día 4', dayType:'carrera', runType:'intervalos', dayFocus:'Cardio metabólico (intervalos livianos, sin foco de competencia)',
+  blockB:[
+    ex('Intervalos en bici o remo',6,'1 min fuerte / 1 min suave','Z3-Z4 (RPE 6-7)','—',{notes:'Esfuerzo sostenido, no al máximo — buscamos gasto calórico y conducción cardiovascular general, no ritmo de competencia. Elegí la herramienta que prefieras.'}),
+  ],
+  blockC:[
+    ex('Mountain climbers',3,'20 c/lado','RPE 6','45 seg'),
+  ],
+  phaseD:'Estiramiento general + foam roller.',
+};
+const C2_M1_D5 = {
+  dayLabel:'Día 5', dayFocus:'Full body hipertrofia (sin trineo ni ski — foco 100% en masa muscular)',
+  blockB:[
+    ex('Sentadilla frontal',4,'8-10','RIR 2','2 min'),
+    ex('Peso muerto convencional',3,'8','RIR 2','2:30 min'),
+  ],
+  blockC:[
+    ex('Press banca inclinado con mancuernas',3,'10','RIR 2','90 seg'),
+    ex('Remo unilateral con mancuerna',3,'10 c/lado','RIR 2','75 seg'),
+    ex('Elevación de piernas colgado',3,'12-15','RIR 1-2','60 seg'),
+  ],
+  phaseD:'Estiramiento full body + foam roller.',
+};
+const C2_M1_D6 = {
+  dayLabel:'Día 6', dayType:'carrera', runType:'continuo', dayFocus:'Cardio general moderado + movilidad',
+  blockB:[
+    ex('Cardio a elección (elíptica, bici o caminadora inclinada)',1,'35 min','Z2 (RPE 4-5)','—',{notes:'Sesión de mayor duración, bajo impacto — ideal para sumar gasto calórico sin acumular fatiga articular. No es una carrera de fondo: elegí una herramienta cómoda.'}),
+  ],
+  blockC:[
+    ex('Core circuito',3,'30 seg plancha + 15 russian twist c/lado + 30 seg hollow hold','RPE 6','45 seg entre ejercicios',{notes:'3 rondas de la secuencia completa.'}),
+  ],
+  phaseD:'Foam roller + movilidad general de cierre semanal (cadera, tobillo, hombro), 8 min.',
+};
+
+// ── BLOQUE 2 (Sem 5-8) — Hipertrofia + introducción a potencia/pliometría ──
+const C2_M2_D1 = {
+  dayLabel:'Día 1', dayFocus:'Fuerza tren inferior (densidad creciente) + abdomen',
+  blockB:[
+    ex('Sentadilla trasera (back squat)',4,'6-8','RIR 1','2 min'),
+    ex('Peso muerto rumano (RDL)',3,'8','RIR 1','90 seg'),
+  ],
+  blockC:[
+    ex('Zancadas búlgaras',3,'10 c/pierna','RIR 1','75 seg'),
+    ex('Hip thrust con barra',3,'10','RIR 1','75 seg'),
+    ex('Elevación de piernas colgado',3,'15','RIR 1','60 seg'),
+  ],
+  phaseD:'Estiramiento de cadena posterior completa + foam roller.',
+};
+const C2_M2_D2 = {
+  dayLabel:'Día 2', dayType:'carrera', runType:'continuo', dayFocus:'Cardio general + abdomen',
+  blockB:[
+    ex('Cardio a elección (bici, remo o caminadora)',1,'28 min','Z2 (RPE 4-5)','—',{notes:'Mismo criterio que Bloque 1 — gasto calórico sostenido, herramienta a elección.'}),
+  ],
+  blockC:[
+    ex('Crunch en polea (cable crunch)',3,'15','RPE 6','45 seg'),
+    ex('Plancha frontal',3,'45-60 seg','RPE 6','45 seg'),
+  ],
+  phaseD:'Caminata de recuperación 3-5 min + estiramiento general.',
+};
+const C2_M2_D3 = {
+  dayLabel:'Día 3', dayFocus:'Fuerza tren superior (densidad creciente) + abdomen',
+  blockB:[
+    ex('Press banca con barra',4,'6-8','RIR 1','2 min'),
+    ex('Remo con barra (Pendlay o Yates)',4,'8','RIR 1','90 seg'),
+  ],
+  blockC:[
+    ex('Press militar con mancuernas',3,'8-10','RIR 1','75 seg'),
+    ex('Dominadas lastradas o jalón al pecho',3,'8','RIR 1','75 seg'),
+    ex('Russian twist con peso',3,'15 c/lado','RIR 1','45 seg'),
+  ],
+  phaseD:'Estiramiento de pectoral y dorsal + foam roller.',
+};
+const C2_M2_D4 = {
+  dayLabel:'Día 4', dayFocus:'Potencia y pliometría (introducción — base para una futura prep híbrida)',
+  blockB:[
+    ex('Salto al cajón (box jump, altura moderada)',4,'5','RIR 3 (foco en aterrizaje, no en fatiga)','2 min',{notes:'Calidad sobre cantidad: si el aterrizaje se degrada, terminá la serie ahí. Nunca vamos a buscar el fallo en este tipo de trabajo — el objetivo es capacidad explosiva, no acumulación de fatiga.'}),
+    ex('Lanzamiento de balón medicinal (rotacional)',3,'6 c/lado','RIR 3','90 seg',{notes:'Explosivo, con descanso completo entre repeticiones si hace falta.'}),
+  ],
+  blockC:[
+    ex('Sprint corto',4,'20 m','RIR 3','90 seg',{notes:'Aceleración progresiva, no al 100% todavía en las primeras semanas — se trata de reintroducir el patrón, no de testear velocidad máxima.'}),
+  ],
+  phaseD:'Estiramiento general suave + caminata de recuperación 5 min (nada de trabajo intenso de cierre después de un día de potencia).',
+};
+const C2_M2_D5 = {
+  dayLabel:'Día 5', dayFocus:'Full body hipertrofia + toque puntual de herramienta híbrida (liviano)',
+  blockB:[
+    ex('Sentadilla frontal',4,'6-8','RIR 1','2 min'),
+    ex('Peso muerto convencional',3,'5-6','RIR 1','2:30 min'),
+  ],
+  blockC:[
+    ex('Press banca inclinado con mancuernas',3,'10','RIR 1','90 seg'),
+    ex('Remo unilateral con mancuerna',3,'10 c/lado','RIR 1','75 seg'),
+    ex('Empuje de trineo (sled push) — técnica, no rendimiento',2,'15 m','RIR 3 (carga liviana)','90 seg',{notes:'Único contacto con herramienta híbrida de la semana, y a propósito liviano: es mantenimiento de patrón motor, no trabajo de rendimiento. La densidad real de trineo/ski vuelve recién cuando arranque una prep específica de competencia.'}),
+  ],
+  phaseD:'Estiramiento full body — cierre de la sesión más exigente de fuerza de la semana.',
+};
+const C2_M2_D6 = {
+  dayLabel:'Día 6', dayType:'carrera', runType:'continuo', dayFocus:'Cardio general moderado + movilidad',
+  blockB:[
+    ex('Cardio a elección (elíptica, bici o caminadora inclinada)',1,'38 min','Z2 (RPE 4-5)','—',{notes:'Progresión leve de duración respecto al Bloque 1 — seguimos en zona de gasto calórico sostenido, sin volver a ritmos de competencia.'}),
+  ],
+  blockC:[
+    ex('Pallof press',3,'12 c/lado','RPE 6','45 seg'),
+  ],
+  phaseD:'Foam roller + movilidad general de cierre semanal (cadera, tobillo, hombro), 8 min.',
+};
+
+const m1 = [C2_M1_D1, C2_M1_D2, C2_M1_D3, C2_M1_D4, C2_M1_D5, C2_M1_D6];
+const m2 = [C2_M2_D1, C2_M2_D2, C2_M2_D3, C2_M2_D4, C2_M2_D5, C2_M2_D6];
+const TEMPLATES = { m1, m2 };
+
+
+function getMeso(week) {
+  if (week <= 4) return MESOCYCLES[0];
+  return MESOCYCLES[1];
+}
+function getWeekSessions(week) {
+  return TEMPLATES[getMeso(week).id];
+}
+
+/* ============================================================ CEO SYSTEM */
+// Bryan no tiene un día de "circuito" genérico — su variedad metabólica
+// vive en el día híbrido (dayType:'hibrido'), que tiene su propia lógica
+// de adaptación en adaptSession(). CIRCUIT_VARIANTS queda vacío;
+// getCircuitVariant() se deja definida porque adaptSession() la
+// referencia, pero nunca se dispara al no haber ningún día 'circuito'.
+const CIRCUIT_VARIANTS = {};
+
+function getCircuitVariant(week, dayIdx, circuitIdx, energyMode) {
+  const semKey = 's' + week;
+  const circKey = semKey + '_c' + (circuitIdx + 1);
+  if (CIRCUIT_VARIANTS[circKey]) {
+    return CIRCUIT_VARIANTS[circKey][energyMode] || CIRCUIT_VARIANTS[circKey].high;
+  }
+  return null;
+}
+// Mensaje motivador por semana (1-8) × nivel de energía (high/medium/low).
+// Aparece en una franja destacada dentro de la sesión. Opcional: si una
+// semana no tiene entrada acá, simplemente no se muestra nada (no rompe).
+const ENERGY_MESSAGES = {
+  1:{high:'Primera semana de este bloque de detox — foco en masa muscular y pérdida de grasa, sin trineo ni ski por ahora. Aprovechá la energía alta para calibrar bien las cargas nuevas, sin forzar techos.',medium:'Cambiar de estímulo (de competencia a hipertrofia pura) puede sentirse raro al principio. Hacé lo que puedas y anotá — esta semana es de referencia.',low:'Bajar el volumen específico y sumar hipertrofia general es en sí mismo un cambio — dale tiempo al cuerpo. Hacé la versión adaptada sin culpa.'},
+  2:{high:'Ya tenés una semana de referencia. Si la técnica fue sólida, subí un poco la carga en los básicos.',medium:'La constancia importa más que la intensidad en esta etapa. Completar al 80% ya suma para el objetivo de masa muscular.',low:'Mantené el movimiento — el cardio general y la fuerza en volumen moderado no exigen estar al 100% para sumar.'},
+  3:{high:'El cuerpo ya está adaptado al nuevo estímulo. Buen momento para subir carga si la técnica acompaña.',medium:'Semana 3 — seguí registrando, la definición y la fuerza van a empezar a notarse pronto.',low:'Tres semanas de trabajo consistente ya son adaptación real, aunque hoy no lo sientas.'},
+  4:{high:'Última semana del bloque de detox. Cerrala fuerte — la semana que viene se suma potencia y pliometría.',medium:'Semana de consolidación. Técnica limpia y series completas.',low:'Cerrar el bloque, aunque sea a media máquina, ya es un logro real.'},
+  5:{high:'Se suma el día de potencia y pliometría — al principio puede sentirse raro un estímulo distinto. Priorizá calidad de aterrizaje sobre intentar ir al máximo.',medium:'Con energía media en la sesión de potencia, bajá el volumen antes que forzar técnica bajo fatiga — este trabajo no se hace cansado.',low:'Un día de baja energía es mal momento para introducir pliometría nueva — priorizá la fuerza y el cardio, y dejá la potencia para cuando tengas más energía esa semana.'},
+  6:{high:'Ya le agarraste la mano al día de potencia. Si la técnica de aterrizaje fue limpia, podés sumar una serie más.',medium:'El volumen se acumula. Priorizá los básicos de fuerza si la energía está media.',low:'La fatiga acumulada es real en esta etapa. Una sesión suave hoy protege las próximas — sobre todo antes del día de potencia.'},
+  7:{high:'Pico de volumen del bloque de hipertrofia. El día de potencia ya debería sentirse más natural.',medium:'Con energía media igual podés tener una sesión de calidad — foco en la sensación muscular, no en los kilos.',low:'Semana de pico con baja energía — escuchate. Una sesión reducida bien hecha vale más que una completa a medias.'},
+  8:{high:'Última semana del ciclo. Cerrala con todo — en básicos, buscá un PR técnico.',medium:'Semana de cierre. Completar este bloque de hipertrofia + introducción a potencia ya es un resultado en sí mismo.',low:'Completar este ciclo, con sus altas y bajas, ya es una base sólida para lo que venga después — sea otro bloque o una prep específica.'}
+};
+function getEnergyMessage(week,eMode){const m=ENERGY_MESSAGES[week];if(!m)return null;return m[eMode]||m.medium;}
+function renderCicloHormonal() {
+  const wrap = document.createElement('div');
+  wrap.className = 'ciclo-wrap';
+  const header = document.createElement('div');
+  header.className = 'ciclo-header';
+  header.innerHTML = '<span class="ciclo-title">💜 Tu ciclo también entrena con vos</span><span class="ciclo-toggle" id="ciclo-toggle">▼ ver</span>';
+  const body = document.createElement('div');
+  body.className = 'ciclo-body';
+  body.innerHTML = `<p class="ciclo-intro">Cada semana del mes tu cuerpo es diferente. Acá va una guía rápida para que sepas cómo ajustar el entrenamiento según cómo te sentís:</p>
+    <div class="ciclo-item"><div class="ciclo-item-title">Si estás en tus primeros días del mes</div><div class="ciclo-item-text">Si hay molestias o simplemente te sentís pesada: bajá el peso con el que normalmente entrenás, hacé las series que puedas sin culpa y priorizá moverte sobre rendirte. Si solo completás 2 series en vez de 4, está perfecto. No es retroceso, es escucharte.</div></div>
+    <div class="ciclo-item"><div class="ciclo-item-title">Si ya pasaron los primeros días y empezás a sentirte mejor</div><div class="ciclo-item-text">Tu energía vuelve naturalmente. Es un buen momento para retomar el ritmo normal, intentar subir un poco el peso que venías usando y ver cómo responde el cuerpo. No tenés que forzar, pero si te sentís bien, aprovechalo.</div></div>
+    <div class="ciclo-item"><div class="ciclo-item-title">Si estás en la mitad del mes y te sentís con mucha energía</div><div class="ciclo-item-text">Suele ser el momento del mes donde más fuerza tenés. Si elegiste "mucha energía" hoy, es una buena semana para intentar superar una marca personal o hacer las series más completas. Solo tené cuidado con los saltos o movimientos muy bruscos si tocan en tu plani — tu cuerpo en esta etapa es más propenso a pequeños tirones.</div></div>
+    <div class="ciclo-item"><div class="ciclo-item-title">Si estás en la semana previa a tus primeros días</div><div class="ciclo-item-text">Es muy común sentirse más cansada, irritable o inflamada. Si elegiste "baja energía" o "energía media" hoy, tu cuerpo te está hablando y está bien hacerle caso. Hacé lo que puedas, sin compararte con cómo estabas la semana pasada. Completar la sesión así como te sentís ya es un logro enorme.</div></div>`;
+  let open = false;
+  header.onclick = function() { open=!open; body.style.display=open?'block':'none'; const ct=document.getElementById('ciclo-toggle');if(ct)ct.textContent=open?'▲ ocultar':'▼ ver'; };
+  wrap.appendChild(header); wrap.appendChild(body); return wrap;
+}
+function renderCEOModNote(session){
+  const frag=document.createDocumentFragment();
+  if(!session.ceoNote&&session.ceoBadge==='normal')return frag;
+  if(session.ceoBadge&&session.ceoBadge!=='normal'){
+    const b=document.createElement('div');
+    b.className='ceo-session-badge ceo-badge-'+(session.ceoBadge==='reduced'?'reduced':'minimal');
+    b.textContent=session.ceoBadge==='reduced'?'⚡ Sesión Reducida':'🎯 Sesión Mínima Efectiva';
+    frag.appendChild(b);
+  }
+  if(session.ceoNote){
+    const n=document.createElement('div');n.className='ceo-mod-note';
+    n.innerHTML='<strong>Método CEO — Sesión adaptada</strong>'+session.ceoNote;
+    frag.appendChild(n);
+  }
+  return frag;
+}
+function renderCEOSelector(week,dayIdx,session,onSelect){
+  const c=document.createElement('div');c.className='ceo-selector';
+  c.innerHTML='<div class="ceo-selector-title">⚡ Método CEO — Adaptá tu sesión de hoy</div>';
+  let selT=null,selE=null;
+  const tLabel=document.createElement('div');tLabel.className='ceo-label';tLabel.textContent='⏱ Tiempo disponible';c.appendChild(tLabel);
+  const tRow=document.createElement('div');tRow.className='ceo-row';
+  [{v:'normal',l:'60 min',s:'Sesión completa'},{v:'reduced',l:'30-40 min',s:'Reducida'},{v:'minimal',l:'20-30 min',s:'Mínima efectiva'}].forEach(o=>{
+    const b=document.createElement('button');b.className='ceo-btn';
+    b.innerHTML='<div>'+o.l+'</div><div style="font-size:10px;font-weight:400;opacity:.7;margin-top:2px;">'+o.s+'</div>';
+    b.onclick=()=>{tRow.querySelectorAll('.ceo-btn').forEach(x=>x.classList.remove('active-time'));b.classList.add('active-time');selT=o.v;check();};
+    tRow.appendChild(b);
+  });c.appendChild(tRow);
+  const eLabel=document.createElement('div');eLabel.className='ceo-label';eLabel.style.marginTop='8px';eLabel.textContent='🔋 Nivel de energía';c.appendChild(eLabel);
+  const eRow=document.createElement('div');eRow.className='ceo-row';
+  [{v:'high',l:'💪 Mucha energía',s:'Al 100%'},{v:'medium',l:'😐 Algo baja',s:'Puedo entrenar'},{v:'low',l:'😴 Baja energía',s:'Día difícil'}].forEach(o=>{
+    const b=document.createElement('button');b.className='ceo-btn';
+    b.innerHTML='<div>'+o.l+'</div><div style="font-size:10px;font-weight:400;opacity:.7;margin-top:2px;">'+o.s+'</div>';
+    b.onclick=()=>{eRow.querySelectorAll('.ceo-btn').forEach(x=>x.classList.remove('active-energy'));b.classList.add('active-energy');selE=o.v;check();};
+    eRow.appendChild(b);
+  });c.appendChild(eRow);
+  const btn=document.createElement('button');
+  btn.style.cssText='width:100%;margin-top:14px;padding:12px;background:#82b7d9;color:#0a0a0a;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;opacity:.4;transition:opacity .2s;font-family:inherit;';
+  btn.textContent='→ Ver mi sesión';btn.disabled=true;c.appendChild(btn);
+  function check(){const ok=selT&&selE;btn.disabled=!ok;btn.style.opacity=ok?'1':'.4';}
+  btn.onclick=()=>{if(selT&&selE)onSelect(selT,selE);};
+  return c;
+}
+function adaptSession(session,timeMode,energyMode,_week,_dayIdx){
+  const s=JSON.parse(JSON.stringify(session));
+  const orig=JSON.parse(JSON.stringify(session));
+  const isCircuito=session.dayType==='circuito';
+  const isCarrera=session.dayType==='carrera';
+  const isHibrido=session.dayType==='hibrido';
+  if(timeMode==='normal'&&energyMode==='high')return{...s,ceoMod:null,ceoBadge:'normal',ceoNote:null};
+  let badge='normal',note='';
+  function adjRIR(rir,d){if(!rir)return rir;return rir.replace(/RIR (\d+)(?:-(\d+))?/,(m,n1,n2)=>{const a=parseInt(n1)+d;return n2!==undefined?'RIR '+a+'-'+(parseInt(n2)+d):'RIR '+a;});}
+  // adjRPE — mismo principio que adjRIR (bajar 1 o 2 escalones según
+  // energía media/baja), pero para trabajo de carrera/Hyrox donde la
+  // escala es RPE en vez de RIR. Se clampea en RPE 3 como piso: por
+  // debajo de eso ya no tiene sentido fisiológico como "esfuerzo".
+  function adjRPE(str,d){if(!str)return str;return str.replace(/RPE (\d+)(?:-(\d+))?/,(m,n1,n2)=>{const a=Math.max(3,parseInt(n1)+d);return n2!==undefined?'RPE '+a+'-'+Math.max(3,parseInt(n2)+d):'RPE '+a;});}
+  function scaleDuration(str,factor){const m=str.match(/(\d+)(?=\s*min)/);if(!m)return str;const n=Math.max(10,Math.round(parseInt(m[1])*factor));return str.replace(/\d+(?=\s*min)/,n);}
+
+  if(isCircuito){
+    // Aplicar variante de formato según energía
+    const applyVariants = (blockC, energy) => {
+      return blockC.map((circ, i) => {
+        const variant = getCircuitVariant(_week||1, _dayIdx||2, i, energy);
+        if (variant) return { ...circ, name: variant.name, reps: variant.reps, rest: variant.rest, notes: variant.notes };
+        return circ;
+      });
+    };
+
+    if(timeMode==='minimal'){
+      // Solo Circuito A, formato según energía, versión corta
+      const minimalVariants = {
+        high:   (key) => CIRCUIT_VARIANTS[key] ? { ...CIRCUIT_VARIANTS[key].high,   name: CIRCUIT_VARIANTS[key].high.name.replace(/\d+ min/, '8 min').replace(/AMRAP \d+/, 'AMRAP 8').replace(/\d+ rondas/, '2 rondas') } : null,
+        medium: (key) => CIRCUIT_VARIANTS[key] ? { ...CIRCUIT_VARIANTS[key].medium, name: CIRCUIT_VARIANTS[key].medium.name.replace(/\d+ min/, '8 min').replace(/EMOM \d+/, 'EMOM 8') } : null,
+        low:    (key) => CIRCUIT_VARIANTS[key] ? { ...CIRCUIT_VARIANTS[key].low,    name: CIRCUIT_VARIANTS[key].low.name.replace(/\d+ rondas/, '2 rondas') } : null,
+      };
+      s.blockC = orig.blockC.slice(0,1).map((circ, i) => {
+        const circKey = 's' + (_week||1) + '_c' + (i+1);
+        const v = minimalVariants[energyMode] ? minimalVariants[energyMode](circKey) : null;
+        return v ? { ...circ, name: v.name, reps: v.reps || circ.reps, rest: v.rest || circ.rest, notes: v.notes || circ.notes } : circ;
+      });
+      badge='minimal';
+    } else if(timeMode==='reduced'){
+      // Solo Circuito A, formato completo según energía
+      s.blockC = applyVariants(orig.blockC.slice(0,1), energyMode);
+      badge='reduced';
+    } else {
+      // Tiempo completo: ambos circuitos con variante de energía
+      s.blockC = applyVariants(orig.blockC, energyMode);
+    }
+
+    if(!s.blockC||!s.blockC.length) s.blockC = applyVariants(orig.blockC.slice(0,1), energyMode);
+
+    const formatLabel = {high:'AMRAP / For time', medium:'EMOM', low:'Circuito con pausa fija'};
+    const tNotes={reduced:'Con el tiempo disponible, el Circuito A es la prioridad.',minimal:'Con poco tiempo, el Circuito A es suficiente para mantener el estímulo metabólico.'};
+    const eNotes={
+      high:'',
+      medium:'Energía algo baja: formato EMOM — el minuto estructura tu esfuerzo automáticamente, sin necesidad de ir al límite.',
+      low:'Baja energía: formato con pausa fija — trabajás a ritmo controlado con descanso garantizado entre rondas. El objetivo es completarlo.'
+    };
+    note=[tNotes[timeMode]||'',eNotes[energyMode]||''].filter(Boolean).join(' ');
+    if(energyMode!=='high') badge = badge==='normal' ? 'reduced' : badge;
+    return{...s,ceoBadge:badge,ceoNote:note||null,ceoMod:note?{note}:null};
+  }
+
+  if(isCarrera){
+    // ════════════════════════════════════════════════════════════════
+    // LÓGICA DE ADAPTACIÓN — DÍAS DE CARRERA
+    // runType: 'continuo' (rodaje fácil), 'intervalos' (calidad/umbral),
+    // 'largo' (fondo, a veces con progresión de ritmo al final).
+    //
+    // Principio fisiológico general: el TIEMPO EN ZONA es lo que genera
+    // la adaptación aeróbica de base — por eso, cuando hay que recortar
+    // por tiempo, se recorta duración manteniendo la zona/ritmo objetivo
+    // intacta (no tiene sentido "correr más rápido" para compensar menos
+    // tiempo, eso cambia qué se está entrenando).
+    //
+    // El trabajo de calidad (intervalos a umbral) es distinto: ahí lo
+    // que importa es la intensidad específica de cada repetición, no la
+    // duración total. Por eso, ante poco tiempo, se recorta el NÚMERO
+    // de repeticiones y no la distancia/ritmo de cada una — cortar la
+    // repetición cambiaría el sistema energético que se entrena.
+    //
+    // Ante baja energía, el trabajo de calidad es el más sensible: el
+    // sistema nervioso fatigado no puede sostener el ritmo objetivo con
+    // buena técnica, y forzarlo entrena un patrón de carrera pobre y
+    // sube el riesgo de lesión sin sumar adaptación real. Por eso, con
+    // energía baja, un día de intervalos SE REEMPLAZA por volumen
+    // aeróbico fácil — autorregulación real, no "hacerlo despacio".
+    // ════════════════════════════════════════════════════════════════
+    const runType = session.runType || 'continuo';
+
+    if (runType === 'intervalos') {
+      if (timeMode === 'reduced') {
+        s.blockB = orig.blockB.map(e => ({...e, sets: Math.max(2, Math.round(e.sets*0.7))}));
+        badge = 'reduced';
+      } else if (timeMode === 'minimal') {
+        s.blockB = orig.blockB.map(e => ({...e, sets: Math.max(2, Math.round(e.sets*0.5))}));
+        badge = 'minimal';
+      }
+      if (energyMode === 'low') {
+        const dur = timeMode==='minimal' ? 20 : timeMode==='reduced' ? 25 : 30;
+        s.blockB = [{ name:'Carrera continua (reemplazo del día de calidad)', sets:1, reps:dur+' min', rir:'Z2 (RPE 4-5)', rest:'—',
+          notes:'Reemplazamos los intervalos por volumen fácil: con el sistema nervioso fatigado, forzar el ritmo de umbral no suma adaptación — solo desgasta y entrena mala técnica. Hoy sumás minutos aeróbicos, no velocidad.' }];
+        if(badge==='normal') badge='reduced';
+        note='Baja energía: día de calidad reemplazado por carrera continua fácil (ver nota en el ejercicio) — autorregulación, no "ir más despacio".';
+      } else if (energyMode === 'medium') {
+        s.blockB = s.blockB.map(e => ({...e, rir: adjRPE(e.rir,-1), notes:(e.notes?e.notes+' ':'')+'Energía media: mismo número de repeticiones, un escalón menos de intensidad (tempo en vez de umbral puro) — se mantiene el volumen, se protege la técnica.'}));
+        note='Energía media: mismas repeticiones, ritmo objetivo un escalón más suave.';
+      }
+    } else if (runType === 'largo') {
+      const baseDur = parseInt((orig.blockB[0]?.reps.match(/(\d+)/)||[,40])[1]);
+      let factor = 1;
+      if (timeMode === 'reduced') factor = 0.75;
+      else if (timeMode === 'minimal') factor = 0.55;
+      if (factor !== 1) {
+        s.blockB = orig.blockB.map(e => ({...e, reps: scaleDuration(e.reps, factor)}));
+        badge = timeMode;
+      }
+      const hasProgression = (orig.blockB[0]?.rir||'').match(/Z2.*Z3|progres/i) || (orig.blockB[0]?.notes||'').match(/progres/i);
+      if (energyMode !== 'high' && hasProgression) {
+        s.blockB = s.blockB.map(e => ({...e, rir:'Z2 (RPE 4-5), sin progresión', notes:'Energía no alta: se saca el tramo de mayor ritmo del final — hoy es 100% continuo en Z2. Se preserva la duración (lo que realmente construye la base aeróbica) y se saca la intensidad añadida.'}));
+        note = (note?note+' ':'')+'Se quitó la progresión de ritmo del final — hoy toda la carrera va en Z2 pareja.';
+      }
+    } else {
+      // continuo (rodaje fácil / base aeróbica estándar)
+      let factor = 1;
+      if (timeMode === 'reduced') factor = 0.7;
+      else if (timeMode === 'minimal') factor = 0.5;
+      if (factor !== 1) {
+        s.blockB = orig.blockB.map(e => ({...e, reps: scaleDuration(e.reps, factor)}));
+        badge = timeMode;
+        note = 'Se ajustó la duración; la zona de esfuerzo se mantiene igual — es un día de base aeróbica, no de intensidad, así que "menos tiempo" es la forma correcta de adaptarlo (no "más rápido").';
+      }
+      // Energía baja en un día ya fácil no cambia la prescripción — el
+      // estímulo ya es de bajo costo neuromuscular. Solo lo anotamos.
+      if (energyMode === 'low' && !note) note = 'Es un día de esfuerzo bajo — con poca energía, igual es una buena opción para sumar volumen aeróbico sin sumar fatiga.';
+    }
+
+    // Accesorios del día de carrera (SkiErg, remo, core, etc. en blockC) —
+    // ANTES esto no se tocaba y quedaba fijo sin importar tiempo/energía.
+    // Mismo principio que en fuerza: ante poco tiempo se reduce el NÚMERO
+    // de series/rondas (no la intensidad de cada una); ante poca energía
+    // se baja el esfuerzo objetivo (RPE) un escalón, igual que en el
+    // resto de la app — no queda "congelado" independientemente de la
+    // combinación elegida.
+    if (orig.blockC && orig.blockC.length) {
+      let cFactor = 1;
+      if (timeMode === 'reduced') cFactor = 0.7;
+      else if (timeMode === 'minimal') cFactor = 0.5;
+      s.blockC = orig.blockC.map(e => {
+        let ne = {...e};
+        if (cFactor !== 1) {
+          if (typeof e.sets === 'number' && e.sets > 1) {
+            ne.sets = Math.max(1, Math.round(e.sets*cFactor));
+          } else {
+            const m = (e.reps||'').match(/^(\d+)/);
+            if (m) ne.reps = e.reps.replace(/^\d+/, Math.max(1, Math.round(parseInt(m[1])*cFactor)));
+          }
+        }
+        if (energyMode === 'medium') ne.rir = adjRPE(ne.rir, -1);
+        else if (energyMode === 'low') ne.rir = adjRPE(ne.rir, -2);
+        return ne;
+      });
+    }
+    return{...s,ceoBadge:badge,ceoNote:note||null,ceoMod:note?{note}:null};
+  }
+
+  if(isHibrido){
+    // ════════════════════════════════════════════════════════════════
+    // LÓGICA DE ADAPTACIÓN — DÍA HÍBRIDO (estaciones / simulación Hyrox)
+    //
+    // Acá lo que se entrena es el patrón motor específico de carrera +
+    // estación bajo fatiga acumulada — eso es literalmente lo que pasa
+    // en la competencia. Por eso, ante poco tiempo, se recortan
+    // ESTACIONES priorizando las más específicas (correr + 1-2
+    // estaciones compuestas), no un recorte parejo de todo el bloque.
+    //
+    // Ante poca energía, el error sería saltear movimientos: la
+    // exposición al patrón motor específico bajo fatiga es el estímulo
+    // que importa acá, no llegar al techo de intensidad. Por eso se
+    // baja el objetivo de esfuerzo (RPE) mantenendo todas las
+    // estaciones, en vez de sacar trabajo.
+    // ════════════════════════════════════════════════════════════════
+    if (timeMode === 'reduced') {
+      s.blockC = orig.blockC.slice(0, Math.max(2, Math.ceil(orig.blockC.length*0.6)));
+      badge = 'reduced';
+      note = 'Con el tiempo disponible, priorizamos correr + las estaciones más específicas de la prueba.';
+    } else if (timeMode === 'minimal') {
+      s.blockC = orig.blockC.slice(0, Math.max(1, Math.ceil(orig.blockC.length*0.4)));
+      badge = 'minimal';
+      note = 'Con poco tiempo, un contacto mínimo con el patrón motor específico ya suma — mejor esto que nada.';
+    }
+    if (energyMode === 'medium') {
+      s.blockC = s.blockC.map(e => ({...e, rir: adjRPE(e.rir,-1)}));
+      note = (note?note+' ':'')+'Energía media: mismas estaciones, un escalón menos de esfuerzo objetivo — hoy entrenamos el patrón, no el techo de intensidad.';
+    } else if (energyMode === 'low') {
+      s.blockC = s.blockC.map(e => ({...e, rir: adjRPE(e.rir,-2)}));
+      note = (note?note+' ':'')+'Baja energía: bajamos bastante la carga/intensidad objetivo, pero mantenemos todas las estaciones — la técnica bajo fatiga es justamente lo que se entrena hoy.';
+    }
+    if(badge==='normal' && energyMode!=='high') badge='reduced';
+    return{...s,ceoBadge:badge,ceoNote:note||null,ceoMod:note?{note}:null};
+  }
+
+  if(timeMode==='reduced'){s.blockB=orig.blockB.map(e=>({...e,sets:Math.min(e.sets,3)}));s.blockC=[];s.blockD=null;badge='reduced';}
+  else if(timeMode==='minimal'){s.blockB=orig.blockB.slice(0,2).map(e=>({...e,sets:Math.min(e.sets,2)}));s.blockC=[];s.blockD=null;badge='minimal';}
+  if(energyMode==='medium'){s.blockB=s.blockB.map(e=>({...e,rir:adjRIR(e.rir,1)}));s.blockC=s.blockC.map(e=>({...e,rir:adjRIR(e.rir,1)}));if(badge==='normal')badge='reduced';}
+  else if(energyMode==='low'){s.blockB=s.blockB.map(e=>({...e,rir:adjRIR(e.rir,2)}));s.blockC=s.blockC.map(e=>({...e,rir:adjRIR(e.rir,2)}));if(badge==='normal')badge='reduced';}
+  const tNotes={normal:'',reduced:'Con el tiempo disponible, priorizamos los ejercicios principales — son los que más impacto tienen en tu objetivo.',minimal:'Con poco tiempo, los 2 ejercicios base son suficientes para mantener el estímulo muscular y seguir avanzando.'};
+  const eNotes={high:'',medium:'Energía algo baja: RIR +1 en todos los ejercicios. Misma sesión, un peldaño menos de intensidad.',low:'Baja energía: RIR +2, sin llegar al fallo. Sigue siendo un estímulo válido — completar la sesión hoy ya es una ganancia.'};
+  note=[tNotes[timeMode],eNotes[energyMode]].filter(Boolean).join(' ');
+  return{...s,ceoBadge:badge,ceoNote:note||null,ceoMod:note?{note}:null};
+}
+
+/* ============================================================ C1 MAP */
+// ════════════════════════════════════════════════════════════════
+// C1_NAME_MAP — mapea cada posición de ejercicio del CICLO 1 a su
+// nombre real, para que el historial C1→C2 pueda mostrar "última vez"
+// aunque el ejercicio venga del ciclo anterior.
+//
+// CÓMO ARMARLO (workflow ya probado en el proyecto):
+//   1. Abrí el HTML base del C1 de este alumno (index_[Alumno]_base.html).
+//   2. Por cada semana/día/bloque, identificá el nombre de cada
+//      ejercicio en el orden en que aparece.
+//   3. La clave sigue el patrón: 'w{semana}_d{día, empieza en 0}_{B|C}__log{índice, empieza en 0}'
+//      Ejemplo: 'w1_d0_B__log0' = semana 1, día 1 (índice 0), bloque B, primer ejercicio.
+//   4. Si el alumno no tiene Ciclo 1 (es su primer ciclo), dejá el
+//      objeto vacío {} — el historial simplemente no va a encontrar
+//      nada en C1 y listo, no rompe nada.
+// ════════════════════════════════════════════════════════════════
+const C1_NAME_MAP = {"w1_d0_B__log0": "Sentadilla trasera (back squat)", "w1_d0_B__log1": "Peso muerto rumano (RDL)", "w1_d0_B__log2": "Zancadas con mancuernas (walking lunges)", "w1_d0_B__log3": "Hip thrust con barra", "w1_d0_C__log0": "Carrera Z2 continua", "w1_d0_C__log1": "Plancha frontal", "w1_d1_B__log0": "Carrera continua Z2", "w1_d1_C__log0": "SkiErg", "w1_d1_C__log1": "Carrera corta entre series", "w1_d2_B__log0": "Press banca con barra", "w1_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w1_d2_B__log2": "Press militar con mancuernas", "w1_d2_B__log3": "Dominadas o jalon al pecho", "w1_d2_B__log4": "Farmers carry", "w1_d2_C__log0": "Wall balls", "w1_d2_C__log1": "Burpee broad jump", "w1_d3_B__log0": "Intervalos en umbral", "w1_d3_C__log0": "Remo continuo", "w1_d4_B__log0": "Sentadilla frontal", "w1_d4_B__log1": "Peso muerto convencional", "w1_d4_B__log2": "Empuje de trineo (sled push)", "w1_d4_B__log3": "Arrastre de trineo (sled pull)", "w1_d4_C__log0": "Carrera corta", "w1_d4_C__log1": "Lunges con mancuernas", "w1_d5_B__log0": "Carrera larga continua", "w1_d5_C__log0": "Core circuito", "w2_d0_B__log0": "Sentadilla trasera (back squat)", "w2_d0_B__log1": "Peso muerto rumano (RDL)", "w2_d0_B__log2": "Zancadas con mancuernas (walking lunges)", "w2_d0_B__log3": "Hip thrust con barra", "w2_d0_C__log0": "Carrera Z2 continua", "w2_d0_C__log1": "Plancha frontal", "w2_d1_B__log0": "Carrera continua Z2", "w2_d1_C__log0": "SkiErg", "w2_d1_C__log1": "Carrera corta entre series", "w2_d2_B__log0": "Press banca con barra", "w2_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w2_d2_B__log2": "Press militar con mancuernas", "w2_d2_B__log3": "Dominadas o jalon al pecho", "w2_d2_B__log4": "Farmers carry", "w2_d2_C__log0": "Wall balls", "w2_d2_C__log1": "Burpee broad jump", "w2_d3_B__log0": "Intervalos en umbral", "w2_d3_C__log0": "Remo continuo", "w2_d4_B__log0": "Sentadilla frontal", "w2_d4_B__log1": "Peso muerto convencional", "w2_d4_B__log2": "Empuje de trineo (sled push)", "w2_d4_B__log3": "Arrastre de trineo (sled pull)", "w2_d4_C__log0": "Carrera corta", "w2_d4_C__log1": "Lunges con mancuernas", "w2_d5_B__log0": "Carrera larga continua", "w2_d5_C__log0": "Core circuito", "w3_d0_B__log0": "Sentadilla trasera (back squat)", "w3_d0_B__log1": "Peso muerto rumano (RDL)", "w3_d0_B__log2": "Zancadas con mancuernas (walking lunges)", "w3_d0_B__log3": "Hip thrust con barra", "w3_d0_C__log0": "Carrera Z2 continua", "w3_d0_C__log1": "Plancha frontal", "w3_d1_B__log0": "Carrera continua Z2", "w3_d1_C__log0": "SkiErg", "w3_d1_C__log1": "Carrera corta entre series", "w3_d2_B__log0": "Press banca con barra", "w3_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w3_d2_B__log2": "Press militar con mancuernas", "w3_d2_B__log3": "Dominadas o jalon al pecho", "w3_d2_B__log4": "Farmers carry", "w3_d2_C__log0": "Wall balls", "w3_d2_C__log1": "Burpee broad jump", "w3_d3_B__log0": "Intervalos en umbral", "w3_d3_C__log0": "Remo continuo", "w3_d4_B__log0": "Sentadilla frontal", "w3_d4_B__log1": "Peso muerto convencional", "w3_d4_B__log2": "Empuje de trineo (sled push)", "w3_d4_B__log3": "Arrastre de trineo (sled pull)", "w3_d4_C__log0": "Carrera corta", "w3_d4_C__log1": "Lunges con mancuernas", "w3_d5_B__log0": "Carrera larga continua", "w3_d5_C__log0": "Core circuito", "w4_d0_B__log0": "Sentadilla trasera (back squat)", "w4_d0_B__log1": "Peso muerto rumano (RDL)", "w4_d0_B__log2": "Zancadas con mancuernas (walking lunges)", "w4_d0_B__log3": "Hip thrust con barra", "w4_d0_C__log0": "Carrera Z2 continua", "w4_d0_C__log1": "Plancha frontal", "w4_d1_B__log0": "Carrera continua Z2", "w4_d1_C__log0": "SkiErg", "w4_d1_C__log1": "Carrera corta entre series", "w4_d2_B__log0": "Press banca con barra", "w4_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w4_d2_B__log2": "Press militar con mancuernas", "w4_d2_B__log3": "Dominadas o jalon al pecho", "w4_d2_B__log4": "Farmers carry", "w4_d2_C__log0": "Wall balls", "w4_d2_C__log1": "Burpee broad jump", "w4_d3_B__log0": "Intervalos en umbral", "w4_d3_C__log0": "Remo continuo", "w4_d4_B__log0": "Sentadilla frontal", "w4_d4_B__log1": "Peso muerto convencional", "w4_d4_B__log2": "Empuje de trineo (sled push)", "w4_d4_B__log3": "Arrastre de trineo (sled pull)", "w4_d4_C__log0": "Carrera corta", "w4_d4_C__log1": "Lunges con mancuernas", "w4_d5_B__log0": "Carrera larga continua", "w4_d5_C__log0": "Core circuito", "w5_d0_B__log0": "Sentadilla trasera (back squat)", "w5_d0_B__log1": "Peso muerto rumano (RDL)", "w5_d0_B__log2": "Zancadas con mancuernas (walking lunges)", "w5_d0_B__log3": "Hip thrust con barra", "w5_d0_C__log0": "Carrera Z2 continua", "w5_d0_C__log1": "Plancha frontal", "w5_d1_B__log0": "Carrera continua Z2", "w5_d1_C__log0": "SkiErg", "w5_d1_C__log1": "Carrera corta entre series", "w5_d2_B__log0": "Press banca con barra", "w5_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w5_d2_B__log2": "Press militar con mancuernas", "w5_d2_B__log3": "Dominadas o jalon al pecho", "w5_d2_B__log4": "Farmers carry", "w5_d2_C__log0": "Wall balls", "w5_d2_C__log1": "Burpee broad jump", "w5_d3_B__log0": "Intervalos en umbral", "w5_d3_C__log0": "Remo continuo", "w5_d4_B__log0": "Sentadilla frontal", "w5_d4_B__log1": "Peso muerto convencional", "w5_d4_B__log2": "Empuje de trineo (sled push)", "w5_d4_B__log3": "Arrastre de trineo (sled pull)", "w5_d4_C__log0": "Carrera corta", "w5_d4_C__log1": "Lunges con mancuernas", "w5_d5_B__log0": "Carrera larga continua", "w5_d5_C__log0": "Core circuito", "w6_d0_B__log0": "Sentadilla trasera (back squat)", "w6_d0_B__log1": "Peso muerto rumano (RDL)", "w6_d0_B__log2": "Zancadas con mancuernas (walking lunges)", "w6_d0_B__log3": "Hip thrust con barra", "w6_d0_C__log0": "Carrera Z2 continua", "w6_d0_C__log1": "Plancha frontal", "w6_d1_B__log0": "Carrera continua Z2", "w6_d1_C__log0": "SkiErg", "w6_d1_C__log1": "Carrera corta entre series", "w6_d2_B__log0": "Press banca con barra", "w6_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w6_d2_B__log2": "Press militar con mancuernas", "w6_d2_B__log3": "Dominadas o jalon al pecho", "w6_d2_B__log4": "Farmers carry", "w6_d2_C__log0": "Wall balls", "w6_d2_C__log1": "Burpee broad jump", "w6_d3_B__log0": "Intervalos en umbral", "w6_d3_C__log0": "Remo continuo", "w6_d4_B__log0": "Sentadilla frontal", "w6_d4_B__log1": "Peso muerto convencional", "w6_d4_B__log2": "Empuje de trineo (sled push)", "w6_d4_B__log3": "Arrastre de trineo (sled pull)", "w6_d4_C__log0": "Carrera corta", "w6_d4_C__log1": "Lunges con mancuernas", "w6_d5_B__log0": "Carrera larga continua", "w6_d5_C__log0": "Core circuito", "w7_d0_B__log0": "Sentadilla trasera (back squat)", "w7_d0_B__log1": "Peso muerto rumano (RDL)", "w7_d0_B__log2": "Zancadas búlgaras", "w7_d0_B__log3": "Hip thrust con barra", "w7_d0_C__log0": "Carrera", "w7_d0_C__log1": "Lunges con mancuernas", "w7_d1_B__log0": "Intervalos en umbral", "w7_d1_C__log0": "Carrera corta post-intervalos", "w7_d1_C__log1": "Wall balls", "w7_d2_B__log0": "Press banca con barra", "w7_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w7_d2_B__log2": "Press militar con mancuernas", "w7_d2_B__log3": "Dominadas lastradas o jalon al pecho", "w7_d2_B__log4": "Farmers carry", "w7_d2_C__log0": "Sled push", "w7_d2_C__log1": "Carrera corta post-sled", "w7_d3_B__log0": "SkiErg", "w7_d3_B__log1": "Carrera", "w7_d3_B__log2": "Sled push", "w7_d3_B__log3": "Carrera", "w7_d3_B__log4": "Sled pull", "w7_d3_C__log0": "Carrera", "w7_d3_C__log1": "Burpee broad jump", "w7_d3_C__log2": "Carrera", "w7_d4_B__log0": "Sentadilla frontal", "w7_d4_B__log1": "Peso muerto convencional", "w7_d4_B__log2": "Press banca inclinado con mancuernas", "w7_d4_B__log3": "Remo unilateral con mancuerna", "w7_d4_C__log0": "Carrera corta", "w7_d4_C__log1": "Lunges con mancuernas", "w7_d4_C__log2": "Wall balls", "w7_d5_B__log0": "Carrera larga con progresion", "w7_d5_C__log0": "Plancha con tirantes (RKC plank)", "w7_d5_C__log1": "Pallof press", "w8_d0_B__log0": "Sentadilla trasera (back squat)", "w8_d0_B__log1": "Peso muerto rumano (RDL)", "w8_d0_B__log2": "Zancadas búlgaras", "w8_d0_B__log3": "Hip thrust con barra", "w8_d0_C__log0": "Carrera", "w8_d0_C__log1": "Lunges con mancuernas", "w8_d1_B__log0": "Intervalos en umbral", "w8_d1_C__log0": "Carrera corta post-intervalos", "w8_d1_C__log1": "Wall balls", "w8_d2_B__log0": "Press banca con barra", "w8_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w8_d2_B__log2": "Press militar con mancuernas", "w8_d2_B__log3": "Dominadas lastradas o jalon al pecho", "w8_d2_B__log4": "Farmers carry", "w8_d2_C__log0": "Sled push", "w8_d2_C__log1": "Carrera corta post-sled", "w8_d3_B__log0": "SkiErg", "w8_d3_B__log1": "Carrera", "w8_d3_B__log2": "Sled push", "w8_d3_B__log3": "Carrera", "w8_d3_B__log4": "Sled pull", "w8_d3_C__log0": "Carrera", "w8_d3_C__log1": "Burpee broad jump", "w8_d3_C__log2": "Carrera", "w8_d4_B__log0": "Sentadilla frontal", "w8_d4_B__log1": "Peso muerto convencional", "w8_d4_B__log2": "Press banca inclinado con mancuernas", "w8_d4_B__log3": "Remo unilateral con mancuerna", "w8_d4_C__log0": "Carrera corta", "w8_d4_C__log1": "Lunges con mancuernas", "w8_d4_C__log2": "Wall balls", "w8_d5_B__log0": "Carrera larga con progresion", "w8_d5_C__log0": "Plancha con tirantes (RKC plank)", "w8_d5_C__log1": "Pallof press", "w9_d0_B__log0": "Sentadilla trasera (back squat)", "w9_d0_B__log1": "Peso muerto rumano (RDL)", "w9_d0_B__log2": "Zancadas búlgaras", "w9_d0_B__log3": "Hip thrust con barra", "w9_d0_C__log0": "Carrera", "w9_d0_C__log1": "Lunges con mancuernas", "w9_d1_B__log0": "Intervalos en umbral", "w9_d1_C__log0": "Carrera corta post-intervalos", "w9_d1_C__log1": "Wall balls", "w9_d2_B__log0": "Press banca con barra", "w9_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w9_d2_B__log2": "Press militar con mancuernas", "w9_d2_B__log3": "Dominadas lastradas o jalon al pecho", "w9_d2_B__log4": "Farmers carry", "w9_d2_C__log0": "Sled push", "w9_d2_C__log1": "Carrera corta post-sled", "w9_d3_B__log0": "SkiErg", "w9_d3_B__log1": "Carrera", "w9_d3_B__log2": "Sled push", "w9_d3_B__log3": "Carrera", "w9_d3_B__log4": "Sled pull", "w9_d3_C__log0": "Carrera", "w9_d3_C__log1": "Burpee broad jump", "w9_d3_C__log2": "Carrera", "w9_d4_B__log0": "Sentadilla frontal", "w9_d4_B__log1": "Peso muerto convencional", "w9_d4_B__log2": "Press banca inclinado con mancuernas", "w9_d4_B__log3": "Remo unilateral con mancuerna", "w9_d4_C__log0": "Carrera corta", "w9_d4_C__log1": "Lunges con mancuernas", "w9_d4_C__log2": "Wall balls", "w9_d5_B__log0": "Carrera larga con progresion", "w9_d5_C__log0": "Plancha con tirantes (RKC plank)", "w9_d5_C__log1": "Pallof press", "w10_d0_B__log0": "Sentadilla trasera (back squat)", "w10_d0_B__log1": "Peso muerto rumano (RDL)", "w10_d0_B__log2": "Zancadas búlgaras", "w10_d0_B__log3": "Hip thrust con barra", "w10_d0_C__log0": "Carrera", "w10_d0_C__log1": "Lunges con mancuernas", "w10_d1_B__log0": "Intervalos en umbral", "w10_d1_C__log0": "Carrera corta post-intervalos", "w10_d1_C__log1": "Wall balls", "w10_d2_B__log0": "Press banca con barra", "w10_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w10_d2_B__log2": "Press militar con mancuernas", "w10_d2_B__log3": "Dominadas lastradas o jalon al pecho", "w10_d2_B__log4": "Farmers carry", "w10_d2_C__log0": "Sled push", "w10_d2_C__log1": "Carrera corta post-sled", "w10_d3_B__log0": "SkiErg", "w10_d3_B__log1": "Carrera", "w10_d3_B__log2": "Sled push", "w10_d3_B__log3": "Carrera", "w10_d3_B__log4": "Sled pull", "w10_d3_C__log0": "Carrera", "w10_d3_C__log1": "Burpee broad jump", "w10_d3_C__log2": "Carrera", "w10_d4_B__log0": "Sentadilla frontal", "w10_d4_B__log1": "Peso muerto convencional", "w10_d4_B__log2": "Press banca inclinado con mancuernas", "w10_d4_B__log3": "Remo unilateral con mancuerna", "w10_d4_C__log0": "Carrera corta", "w10_d4_C__log1": "Lunges con mancuernas", "w10_d4_C__log2": "Wall balls", "w10_d5_B__log0": "Carrera larga con progresion", "w10_d5_C__log0": "Plancha con tirantes (RKC plank)", "w10_d5_C__log1": "Pallof press", "w11_d0_B__log0": "Sentadilla trasera (back squat)", "w11_d0_B__log1": "Peso muerto rumano (RDL)", "w11_d0_B__log2": "Zancadas búlgaras", "w11_d0_B__log3": "Hip thrust con barra", "w11_d0_C__log0": "Carrera", "w11_d0_C__log1": "Lunges con mancuernas", "w11_d1_B__log0": "Intervalos en umbral", "w11_d1_C__log0": "Carrera corta post-intervalos", "w11_d1_C__log1": "Wall balls", "w11_d2_B__log0": "Press banca con barra", "w11_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w11_d2_B__log2": "Press militar con mancuernas", "w11_d2_B__log3": "Dominadas lastradas o jalon al pecho", "w11_d2_B__log4": "Farmers carry", "w11_d2_C__log0": "Sled push", "w11_d2_C__log1": "Carrera corta post-sled", "w11_d3_B__log0": "SkiErg", "w11_d3_B__log1": "Carrera", "w11_d3_B__log2": "Sled push", "w11_d3_B__log3": "Carrera", "w11_d3_B__log4": "Sled pull", "w11_d3_C__log0": "Carrera", "w11_d3_C__log1": "Burpee broad jump", "w11_d3_C__log2": "Carrera", "w11_d4_B__log0": "Sentadilla frontal", "w11_d4_B__log1": "Peso muerto convencional", "w11_d4_B__log2": "Press banca inclinado con mancuernas", "w11_d4_B__log3": "Remo unilateral con mancuerna", "w11_d4_C__log0": "Carrera corta", "w11_d4_C__log1": "Lunges con mancuernas", "w11_d4_C__log2": "Wall balls", "w11_d5_B__log0": "Carrera larga con progresion", "w11_d5_C__log0": "Plancha con tirantes (RKC plank)", "w11_d5_C__log1": "Pallof press", "w12_d0_B__log0": "Sentadilla trasera (back squat)", "w12_d0_B__log1": "Peso muerto rumano (RDL)", "w12_d0_B__log2": "Zancadas búlgaras", "w12_d0_B__log3": "Hip thrust con barra", "w12_d0_C__log0": "Carrera", "w12_d0_C__log1": "Lunges con mancuernas", "w12_d1_B__log0": "Intervalos en umbral", "w12_d1_C__log0": "Carrera corta post-intervalos", "w12_d1_C__log1": "Wall balls", "w12_d2_B__log0": "Press banca con barra", "w12_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w12_d2_B__log2": "Press militar con mancuernas", "w12_d2_B__log3": "Dominadas lastradas o jalon al pecho", "w12_d2_B__log4": "Farmers carry", "w12_d2_C__log0": "Sled push", "w12_d2_C__log1": "Carrera corta post-sled", "w12_d3_B__log0": "SkiErg", "w12_d3_B__log1": "Carrera", "w12_d3_B__log2": "Sled push", "w12_d3_B__log3": "Carrera", "w12_d3_B__log4": "Sled pull", "w12_d3_C__log0": "Carrera", "w12_d3_C__log1": "Burpee broad jump", "w12_d3_C__log2": "Carrera", "w12_d4_B__log0": "Sentadilla frontal", "w12_d4_B__log1": "Peso muerto convencional", "w12_d4_B__log2": "Press banca inclinado con mancuernas", "w12_d4_B__log3": "Remo unilateral con mancuerna", "w12_d4_C__log0": "Carrera corta", "w12_d4_C__log1": "Lunges con mancuernas", "w12_d4_C__log2": "Wall balls", "w12_d5_B__log0": "Carrera larga con progresion", "w12_d5_C__log0": "Plancha con tirantes (RKC plank)", "w12_d5_C__log1": "Pallof press", "w13_d0_B__log0": "Sentadilla trasera (back squat)", "w13_d0_B__log1": "Peso muerto rumano (RDL)", "w13_d0_B__log2": "Hip thrust con barra", "w13_d0_C__log0": "Carrera", "w13_d0_C__log1": "Lunges con mancuernas", "w13_d1_B__log0": "Intervalos a ritmo objetivo de carrera Hyrox", "w13_d1_C__log0": "SkiErg", "w13_d2_B__log0": "Press banca con barra", "w13_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w13_d2_B__log2": "Dominadas o jalon al pecho", "w13_d2_B__log3": "Farmers carry", "w13_d2_C__log0": "Sled push", "w13_d2_C__log1": "Sled pull", "w13_d3_B__log0": "Carrera", "w13_d3_B__log1": "SkiErg", "w13_d3_B__log2": "Carrera", "w13_d3_B__log3": "Sled push", "w13_d3_B__log4": "Carrera", "w13_d3_B__log5": "Sled pull", "w13_d3_C__log0": "Carrera", "w13_d3_C__log1": "Burpee broad jump", "w13_d3_C__log2": "Carrera", "w13_d4_B__log0": "Sentadilla goblet o frontal", "w13_d4_B__log1": "Press banca inclinado con mancuernas", "w13_d4_B__log2": "Remo unilateral con mancuerna", "w13_d4_B__log3": "Hip thrust con barra", "w13_d4_C__log0": "Wall balls", "w13_d4_C__log1": "Plancha con tirantes (RKC plank)", "w13_d5_B__log0": "Carrera continua a ritmo objetivo", "w13_d5_C__log0": "Pallof press", "w14_d0_B__log0": "Sentadilla trasera (back squat)", "w14_d0_B__log1": "Peso muerto rumano (RDL)", "w14_d0_B__log2": "Hip thrust con barra", "w14_d0_C__log0": "Carrera", "w14_d0_C__log1": "Lunges con mancuernas", "w14_d1_B__log0": "Intervalos a ritmo objetivo de carrera Hyrox", "w14_d1_C__log0": "SkiErg", "w14_d2_B__log0": "Press banca con barra", "w14_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w14_d2_B__log2": "Dominadas o jalon al pecho", "w14_d2_B__log3": "Farmers carry", "w14_d2_C__log0": "Sled push", "w14_d2_C__log1": "Sled pull", "w14_d3_B__log0": "Carrera", "w14_d3_B__log1": "SkiErg", "w14_d3_B__log2": "Carrera", "w14_d3_B__log3": "Sled push", "w14_d3_B__log4": "Carrera", "w14_d3_B__log5": "Sled pull", "w14_d3_C__log0": "Carrera", "w14_d3_C__log1": "Burpee broad jump", "w14_d3_C__log2": "Carrera", "w14_d4_B__log0": "Sentadilla goblet o frontal", "w14_d4_B__log1": "Press banca inclinado con mancuernas", "w14_d4_B__log2": "Remo unilateral con mancuerna", "w14_d4_B__log3": "Hip thrust con barra", "w14_d4_C__log0": "Wall balls", "w14_d4_C__log1": "Plancha con tirantes (RKC plank)", "w14_d5_B__log0": "Carrera continua a ritmo objetivo", "w14_d5_C__log0": "Pallof press", "w15_d0_B__log0": "Sentadilla trasera (back squat)", "w15_d0_B__log1": "Peso muerto rumano (RDL)", "w15_d0_B__log2": "Hip thrust con barra", "w15_d0_C__log0": "Carrera", "w15_d0_C__log1": "Lunges con mancuernas", "w15_d1_B__log0": "Intervalos a ritmo objetivo de carrera Hyrox", "w15_d1_C__log0": "SkiErg", "w15_d2_B__log0": "Press banca con barra", "w15_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w15_d2_B__log2": "Dominadas o jalon al pecho", "w15_d2_B__log3": "Farmers carry", "w15_d2_C__log0": "Sled push", "w15_d2_C__log1": "Sled pull", "w15_d3_B__log0": "Carrera", "w15_d3_B__log1": "SkiErg", "w15_d3_B__log2": "Carrera", "w15_d3_B__log3": "Sled push", "w15_d3_B__log4": "Carrera", "w15_d3_B__log5": "Sled pull", "w15_d3_C__log0": "Carrera", "w15_d3_C__log1": "Burpee broad jump", "w15_d3_C__log2": "Carrera", "w15_d4_B__log0": "Sentadilla goblet o frontal", "w15_d4_B__log1": "Press banca inclinado con mancuernas", "w15_d4_B__log2": "Remo unilateral con mancuerna", "w15_d4_B__log3": "Hip thrust con barra", "w15_d4_C__log0": "Wall balls", "w15_d4_C__log1": "Plancha con tirantes (RKC plank)", "w15_d5_B__log0": "Carrera continua a ritmo objetivo", "w15_d5_C__log0": "Pallof press", "w16_d0_B__log0": "Sentadilla trasera (back squat)", "w16_d0_B__log1": "Peso muerto rumano (RDL)", "w16_d0_B__log2": "Hip thrust con barra", "w16_d0_C__log0": "Carrera", "w16_d0_C__log1": "Lunges con mancuernas", "w16_d1_B__log0": "Intervalos a ritmo objetivo de carrera Hyrox", "w16_d1_C__log0": "SkiErg", "w16_d2_B__log0": "Press banca con barra", "w16_d2_B__log1": "Remo con barra (Pendlay o Yates)", "w16_d2_B__log2": "Dominadas o jalon al pecho", "w16_d2_B__log3": "Farmers carry", "w16_d2_C__log0": "Sled push", "w16_d2_C__log1": "Sled pull", "w16_d3_B__log0": "Carrera", "w16_d3_B__log1": "SkiErg", "w16_d3_B__log2": "Carrera", "w16_d3_B__log3": "Sled push", "w16_d3_B__log4": "Carrera", "w16_d3_B__log5": "Sled pull", "w16_d3_C__log0": "Carrera", "w16_d3_C__log1": "Burpee broad jump", "w16_d3_C__log2": "Carrera", "w16_d4_B__log0": "Sentadilla goblet o frontal", "w16_d4_B__log1": "Press banca inclinado con mancuernas", "w16_d4_B__log2": "Remo unilateral con mancuerna", "w16_d4_B__log3": "Hip thrust con barra", "w16_d4_C__log0": "Wall balls", "w16_d4_C__log1": "Plancha con tirantes (RKC plank)", "w16_d5_B__log0": "Carrera continua a ritmo objetivo", "w16_d5_C__log0": "Pallof press", "w17_d0_B__log0": "Sentadilla trasera (back squat)", "w17_d0_B__log1": "Press banca con barra", "w17_d1_B__log0": "Carrera a ritmo de competencia", "w17_d1_C__log0": "Movilidad dinamica de cierre", "w17_d2_C__log0": "Circuito de movilidad completo", "w17_d3_C__log0": "Carrera", "w17_d4_C__log0": "Estiramiento suave general"};
+function findLastRecord(exName, currentWeek, currentDayIdx, currentPhase, currentIdx) {
+  const currentLogKey = 'w' + currentWeek + '_d' + currentDayIdx + '_' + currentPhase + '__log' + currentIdx;
+  const nameNorm = exName.toLowerCase().trim().replace(/^ss [ab]\d:\s*/i, '').replace(/\s*\([^)]*\)\s*/g, '').trim();
+  const results = [];
+
+  // Iterar todas las claves del logData
+  for (const key of Object.keys(state.logData)) {
+    if (key === currentLogKey) continue;
+    // Solo claves de log de ejercicios (formato: wN_dN_X__logN)
+    if (!key.match(/^w\d+_d\d+_[BCD]__log\d+$/)) continue;
+
+    const entry = state.logData[key];
+    if (!entry) continue;
+    if (!entry.sets || !entry.sets.some(s => s.kg || s.reps)) continue;
+
+    // Ver si tiene nombre guardado (el alumno lo editó)
+    const nameKey = key + '__name';
+    const savedName = (state.logData[nameKey] && state.logData[nameKey].v) || '';
+    if (savedName) {
+      const savedNorm = savedName.toLowerCase().trim().replace(/^ss [ab]\d:\s*/i, '');
+      if (savedNorm === nameNorm) {
+        // Extraer semana y día de la clave para ordenar
+        const m = key.match(/^w(\d+)_d(\d+)/);
+        results.push({ week: parseInt(m[1]), day: parseInt(m[2]), key, entry });
+        continue;
+      }
+    }
+
+    // Si no tiene nombre guardado, buscar en el plan por posición
+    try {
+      const m = key.match(/^w(\d+)_d(\d+)_([BCD])__log(\d+)$/);
+      if (!m) continue;
+      const w = parseInt(m[1]), d = parseInt(m[2]), ph = m[3], idx = parseInt(m[4]);
+      const sessDays = getSessions(w);
+      if (!sessDays || !sessDays[d]) continue;
+      const sess = sessDays[d];
+      const blockKey = ph === 'B' ? 'blockB' : ph === 'C' ? 'blockC' : 'blockD';
+      const block = sess[blockKey];
+      if (!block || !block[idx]) continue;
+      const planName = (block[idx].name || '').toLowerCase().trim().replace(/^ss [ab]\d:\s*/i, '');
+      if (planName === nameNorm) {
+        results.push({ week: w, day: d, key, entry });
+      }
+    } catch(e) {}
+  }
+
+  // Buscar en historial Ciclo 1 usando mapa de posiciones
+  if (state.logDataC1 && C1_NAME_MAP) {
+    for (const key of Object.keys(state.logDataC1)) {
+      if (!key.match(/^w\d+_d\d+_[BCD]__log\d+$/)) continue;
+      const entry = state.logDataC1[key];
+      if (!entry || !entry.sets || !entry.sets.some(s => s.kg || s.reps)) continue;
+      const mappedName = C1_NAME_MAP[key] || '';
+      const savedName = (state.logDataC1[key+'__name'] && state.logDataC1[key+'__name'].v) || '';
+      const candidateName = (mappedName || savedName).toLowerCase().trim()
+        .replace(/^ss [ab]\d:\s*/i, '').replace(/\s*\([^)]*\)\s*/g, '').trim();
+      if (candidateName && candidateName === nameNorm) {
+        const m = key.match(/^w(\d+)_d(\d+)/);
+        if (m) results.push({ week: parseInt(m[1]), day: parseInt(m[2]), key, entry, fromC1: true });
+      }
+    }
+  }
+
+  if (!results.length) return null;
+  // C2 tiene prioridad sobre C1 — devolver el más reciente
+  const c2r = results.filter(r => !r.fromC1);
+  const c1r = results.filter(r => r.fromC1);
+  if (c2r.length) {
+    c2r.sort((a, b) => a.week !== b.week ? a.week - b.week : a.day - b.day);
+    return c2r[c2r.length - 1];
+  }
+  c1r.sort((a, b) => a.week !== b.week ? a.week - b.week : a.day - b.day);
+  const best = c1r[c1r.length - 1];
+  if (best) best.fromC1label = '(Ciclo 1)';
+  return best || null;
+}
+
+/* ============================================================ RENDER HELPERS */
+function completedWeeks() {
+  let count = 0;
+  for (let w = 1; w <= 8; w++) {
+    const nd = getWeekSessions(w).length;
+    let all = true;
+    for (let d = 0; d < nd; d++) {
+      if (!state.sessionDone[`w${w}_d${d}__done`]) { all = false; break; }
+    }
+    if (all) count++; else break;
+  }
+  return count;
+}
+
+function dateRange() {
+  if (!state.planStart) return '—';
+  const s = new Date(state.planStart + 'T00:00:00');
+  if (isNaN(s.getTime())) return 'Fecha inválida';
+  const e = new Date(s); e.setDate(e.getDate() + 84);
+  const fmt = d => d.toLocaleDateString('es-ES',{month:'short',year:'numeric'}).toUpperCase().replace('.','');
+  return fmt(s) + ' → ' + fmt(e);
+}
+
+/* ============================================================
+   RENDER HELPERS
+   ============================================================ */
+function h(tag, attrs, ...children) {
+  const el = document.createElement(tag);
+  if (attrs) {
+    for (const [k, v] of Object.entries(attrs)) {
+      if (k === 'className') el.className = v;
+      else if (k.startsWith('on')) el[k.toLowerCase()] = v;
+      else el.setAttribute(k, v);
+    }
+  }
+  for (const c of children) {
+    if (c == null || c === false) continue;
+    if (typeof c === 'string' || typeof c === 'number') el.appendChild(document.createTextNode(c));
+    else if (c && c.nodeType) el.appendChild(c);
+  }
+  return el;
+}
+
+function pill(text, accent) {
+  const s = h('span', {className: accent ? 'pill pill-accent' : 'pill'}, text);
+  return s;
+}
+
+/* ============================================================
+   RENDER: HEADER
+   ============================================================ */
+
+function renderExCard(week, dayIdx, phase, idx, exObj) {
+  const dayKey = `w${week}_d${dayIdx}_${phase}`;
+  const logKey = `${dayKey}__log${idx}`;
+  const vidKey = exObj.name; // clave = nombre del ejercicio, coincide con videos.json
+  const entry = state.logData[logKey] || { sets:[], comment:'', kneeSensation: null };
+  const numSets = typeof exObj.sets === 'number' ? exObj.sets : 1;
+  const setsArr = entry.sets.length === numSets ? entry.sets : Array.from({length:numSets},(_,i)=>entry.sets[i]||{kg:'',reps:''});
+
+  const card = h('div', {className:'ex-card normal'});
+  card.style.cssText = 'padding:0;overflow:hidden;';
+  const cardHeader = document.createElement('div');
+  cardHeader.style.cssText = 'padding:12px 14px 10px 14px;cursor:pointer;';
+  let cardOpen = false;
+  const cardBody = document.createElement('div');
+  cardBody.style.cssText = 'display:none;padding:0 14px 14px 14px;border-top:1px solid var(--border);';
+  const expandIcon = document.createElement('span');
+  expandIcon.textContent = '▼';
+  expandIcon.style.cssText = 'font-size:10px;color:var(--dim);margin-left:8px;flex-shrink:0;';
+  cardHeader.onclick = function(e){ if(e.target.tagName==='INPUT')return; cardOpen=!cardOpen; cardBody.style.display=cardOpen?'block':'none'; expandIcon.textContent=cardOpen?'▲':'▼'; };
+
+  // Header
+  const top = h('div', {className:'ex-top'});
+  const nameWrap = h('div', {className:'ex-name'});
+  // Nombre editable — se guarda en logData con clave __name
+  const nameKey = logKey + '__name';
+  const savedName = (state.logData[nameKey] && state.logData[nameKey].v) || exObj.name;
+  const nameInput = document.createElement('input');
+  nameInput.type = 'text';
+  nameInput.value = savedName;
+  nameInput.style.cssText = 'background:transparent;border:none;border-bottom:1px dashed var(--faint);color:var(--text);font-weight:700;font-size:15.5px;width:100%;outline:none;padding:2px 0;min-width:0;';
+  nameInput.disabled = isReadOnlyMode();
+  nameInput.addEventListener('input', function() {
+    if (isReadOnlyMode()) return;
+    state.logData[nameKey] = { v: nameInput.value }; save();
+  });
+  nameWrap.appendChild(nameInput);
+  top.appendChild(nameWrap);
+  const pills = h('div', {className:'ex-pills'});
+  pills.appendChild(pill(`${exObj.sets} ${exObj.sets===1?'bloque':'series'}`));
+  pills.appendChild(pill(exObj.reps));
+  pills.appendChild(pill(exObj.rir, true));
+  top.appendChild(pills);
+  top.appendChild(expandIcon);
+  cardHeader.appendChild(top);
+  card.appendChild(cardHeader);
+  cardBody.appendChild(h('div', {className:'ex-rest', style:'padding-top:8px;'}, 'Descanso: ' + exObj.rest));
+
+  // General note
+  if (exObj.notes) {
+    cardBody.appendChild(h('div', {className:'ex-note'}, exObj.notes));
+  }
+
+  // Video field
+  // ── BOTÓN DE VIDEO (sin embed, solo abre el link) ──
+  var vidWrap = document.createElement('div');
+  vidWrap.style.cssText = 'margin-top:10px;';
+
+  var vidInputRow = document.createElement('div');
+  vidInputRow.style.cssText = 'display:flex;align-items:center;gap:6px;';
+
+  var vidInput = document.createElement('input');
+  vidInput.type = 'text';
+  vidInput.className = 'video-input';
+  vidInput.placeholder = 'Pegar link de YouTube o Vimeo...';
+  vidInput.value = state.videos[vidKey] || '';
+  vidInput.style.flex = '1';
+  vidInput.disabled = isReadOnlyMode();
+
+  var savedSpan = document.createElement('span');
+  savedSpan.className = 'video-saved';
+  savedSpan.style.display = 'none';
+  savedSpan.textContent = '✓';
+
+  var playBtn = document.createElement('button');
+  playBtn.type = 'button';
+  playBtn.textContent = '▶';
+  playBtn.title = 'Ver video';
+  playBtn.style.cssText = 'background:none;border:1px solid var(--lime);color:var(--lime);border-radius:7px;padding:6px 12px;font-size:14px;cursor:pointer;flex-shrink:0;display:none;';
+  function updateExPlayBtn() {
+    playBtn.style.display = vidInput.value.trim() ? 'inline-block' : 'none';
+  }
+  playBtn.addEventListener('click', function() {
+    if (vidInput.value.trim()) openVideoModal(vidInput.value.trim());
+  });
+
+  vidInput.addEventListener('input', function() {
+    const exName = vidKey; // usamos vidKey como identificador
+    saveVideo(exName, vidInput.value); // guarda en GitHub + localStorage
+    savedSpan.style.display = 'inline';
+    setTimeout(function() { savedSpan.style.display = 'none'; }, 1200);
+    updateExPlayBtn();
+  });
+
+  updateExPlayBtn();
+
+  vidInputRow.appendChild(vidInput);
+  vidInputRow.appendChild(savedSpan);
+  vidInputRow.appendChild(playBtn);
+  vidWrap.appendChild(vidInputRow);
+  cardBody.appendChild(vidWrap);
+
+  // Log table
+  const logSection = h('div', {className:'log-section'});
+  logSection.appendChild(h('div', {className:'phase-label'}, 'Tu registro'));
+  const tableWrap = h('div', {className:'scroll', style:'overflow-x:auto'});
+  const table = h('table', {className:'log-table'});
+  const thead = h('tr', null,
+    h('th', {className:'log-th'}, 'Serie'),
+    h('th', {className:'log-th'}, 'Kg'),
+    h('th', {className:'log-th'}, 'Reps logradas')
+  );
+  table.appendChild(thead);
+  setsArr.forEach((s, i) => {
+    const tr = h('tr', {className:'log-tr'},
+      h('td', {className:'log-td'}, h('span', {className:'log-num'}, '#' + (i+1)))
+    );
+    const kgInput = h('input', {type:'text', inputmode:'decimal', placeholder:'—', className:'log-input', value:s.kg||''});
+    const repsInput = h('input', {type:'text', inputmode:'numeric', placeholder:'—', className:'log-input wide', value:s.reps||''});
+    kgInput.disabled = isReadOnlyMode();
+    repsInput.disabled = isReadOnlyMode();
+    function updateSet() {
+      if (isReadOnlyMode()) return;
+      const e2 = state.logData[logKey] || {sets:[...setsArr], comment:'', kneeSensation: entry.kneeSensation ?? null};
+      if (!e2.sets[i]) e2.sets[i] = {};
+      e2.sets[i].kg = kgInput.value;
+      e2.sets[i].reps = repsInput.value;
+      state.logData[logKey] = e2;
+      save();
+    }
+    kgInput.addEventListener('input', updateSet);
+    repsInput.addEventListener('input', updateSet);
+    tr.appendChild(h('td', {className:'log-td'}, kgInput));
+    tr.appendChild(h('td', {className:'log-td'}, repsInput));
+    table.appendChild(tr);
+  });
+  tableWrap.appendChild(table);
+  logSection.appendChild(tableWrap);
+
+  const comment = h('textarea', {className:'log-comment', placeholder:'Comentarios (sensación, dolor, energía, técnica...)'});
+  comment.value = entry.comment || '';
+  comment.disabled = isReadOnlyMode();
+  comment.addEventListener('input', () => {
+    if (isReadOnlyMode()) return;
+    const e2 = state.logData[logKey] || {sets:[...setsArr], kneeSensation: entry.kneeSensation ?? null};
+    e2.comment = comment.value;
+    state.logData[logKey] = e2;
+    save();
+  });
+  logSection.appendChild(comment);
+  cardBody.appendChild(logSection);
+
+  // Técnica avanzada
+  const techNote = getTechNote(exObj.name, exObj.reps);
+  if (techNote) {
+    const tn = document.createElement('div');
+    tn.style.cssText = 'background:rgba(200,255,61,0.06);border-left:3px solid var(--lime);border-radius:0 8px 8px 0;padding:10px 12px;margin:8px 0;font-size:12.5px;color:var(--text);line-height:1.6;';
+    const tnTitle = document.createElement('strong');
+    tnTitle.style.cssText = 'color:var(--lime);display:block;margin-bottom:4px;';
+    tnTitle.textContent = '📖 ' + techNote.title;
+    tn.appendChild(tnTitle);
+    tn.appendChild(document.createTextNode(techNote.text));
+    card.appendChild(tn);
+  }
+  const histBtn = document.createElement('button');
+  histBtn.style.cssText = 'background:none;border:1px solid var(--faint);color:var(--dim);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;margin-top:6px;display:flex;align-items:center;gap:4px;';
+  histBtn.textContent = '🕐 Ver última vez';
+  let histVisible = false;
+  const histPanel = document.createElement('div');
+  histPanel.style.cssText = 'background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-top:6px;font-size:12px;color:var(--dim);line-height:1.6;display:none;';
+  histBtn.addEventListener('click', function() {
+    histVisible = !histVisible;
+    if (histVisible) {
+      const rec = findLastRecord(exObj.name, week, dayIdx, phase, idx);
+      if (!rec) {
+        histPanel.innerHTML = '<div style="font-size:11px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Sin registro previo</div><div>Este es el primer registro de este ejercicio.</div>';
+      } else {
+        let html = '<div style="font-size:11px;color:var(--faint);margin-bottom:4px;text-transform:uppercase;letter-spacing:.08em;">Última vez: Semana ' + rec.week + ' · Día ' + (rec.day+1) + '</div>';
+        if (rec.entry.sets) rec.entry.sets.forEach((s,i) => {
+          if (s.kg||s.reps) html += '<div style="color:var(--text);">Serie '+(i+1)+': <strong>'+(s.kg||'—')+' kg</strong> × <strong>'+(s.reps||'—')+' reps</strong></div>';
+        });
+        if (rec.entry.comment) html += '<div style="margin-top:6px;color:var(--dim);font-style:italic;">💬 '+rec.entry.comment+'</div>';
+        histPanel.innerHTML = html;
+      }
+      histPanel.style.display='block'; histBtn.textContent='🕐 Ocultar historial';
+    } else { histPanel.style.display='none'; histBtn.textContent='🕐 Ver última vez'; }
+  });
+  cardBody.appendChild(histBtn);
+  cardBody.appendChild(histPanel);
+  card.appendChild(cardBody);
+  return card;
+}
+
+/* ============================================================
+   RENDER: STATS TAB
+   ============================================================ */
+function renderStats() {
+  const c = document.getElementById('content');
+  c.innerHTML = '';
+
+  let totalSessions = 0;
+  for (let w = 1; w <= 8; w++) totalSessions += getWeekSessions(w).length;
+  const doneCount = Object.values(state.sessionDone).filter(Boolean).length;
+  const pct = totalSessions ? Math.round((doneCount/totalSessions)*100) : 0;
+  const setsLogged = Object.values(state.logData).reduce((acc, e) => {
+    if (!e || !e.sets) return acc;
+    return acc + e.sets.filter(s => s && (s.kg || s.reps)).length;
+  }, 0);
+
+  const label = h('div', {className:'phase-label'}, 'Resumen general');
+  c.appendChild(label);
+  const grid = h('div', {className:'stats-grid'});
+
+  const s1 = h('div', {className:'stat-card'});
+  s1.appendChild(h('div', {className:'stat-num', style:'color:var(--accent)'}, doneCount));
+  s1.appendChild(h('div', {className:'stat-label'}, `de ${totalSessions} sesiones completadas`));
+  grid.appendChild(s1);
+
+  const s2 = h('div', {className:'stat-card'});
+  s2.appendChild(h('div', {className:'stat-num', style:'color:var(--lime)'}, pct + '%'));
+  s2.appendChild(h('div', {className:'stat-label'}, 'del plan total avanzado'));
+  grid.appendChild(s2);
+
+  const s3 = h('div', {className:'stat-card full'});
+  s3.appendChild(h('div', {className:'stat-num', style:'color:var(--text)'}, setsLogged));
+  s3.appendChild(h('div', {className:'stat-label'}, 'series registradas con datos (kg / reps)'));
+  grid.appendChild(s3);
+  c.appendChild(grid);
+
+  const label2 = h('div', {className:'phase-label'}, 'Avance por bloque');
+  c.appendChild(label2);
+
+  MESOCYCLES.forEach(m => {
+    const sessInBlock = m.weeks.reduce((acc, w) => acc + getWeekSessions(w).length, 0);
+    const doneInBlock = m.weeks.reduce((acc, w) => {
+      const nd = getWeekSessions(w).length;
+      let cnt = 0;
+      for (let d = 0; d < nd; d++) { if (state.sessionDone[`w${w}_d${d}__done`]) cnt++; }
+      return acc + cnt;
+    }, 0);
+    const bpct = Math.round((doneInBlock/sessInBlock)*100);
+    const card = h('div', {className:'stat-card', style:'margin-bottom:10px'});
+    const row = h('div', {style:'display:flex;justify-content:space-between;margin-bottom:8px'});
+    row.appendChild(h('div', {style:'font-weight:700;font-size:14px'}, m.name + ' · ' + m.subtitle));
+    row.appendChild(h('div', {className:'mono', style:'font-size:12px;color:var(--dim)'}, `${doneInBlock}/${sessInBlock}`));
+    card.appendChild(row);
+    const bar = h('div', {className:'block-bar'});
+    bar.appendChild(h('div', {className:'block-bar-fill', style:`width:${bpct}%`}));
+    card.appendChild(bar);
+    c.appendChild(card);
+  });
+
+  c.appendChild(h('div', {style:'margin-top:18px;padding:14px 16px;background:var(--surface);border:1px dashed var(--border);border-radius:10px;font-size:13px;color:var(--dim);line-height:1.6'},
+    'Estas cifras reflejan lo que marcaste como completado y los datos que registraste en cada serie. Usálas para ver tu constancia semana a semana — lo que importa es la tendencia a lo largo de las 8 semanas.'
+  ));
+}
+
+/* ============================================================
+   TAB SWITCHING
+   ============================================================ */
+const RECIPES=[
+  {weeks:[1,2],recipes:[
+    {name:'Panqueques proteicos de avena',tag:'Desayuno · ~35g proteína',ingredients:'• 1 scoop Whey vainilla\n• 60g avena molida\n• 2 huevos\n• 100ml leche\n• 1 cdita polvo de hornear',steps:'1. Mezclar todo hasta masa homogénea.\n2. Sartén a fuego medio con spray de aceite.\n3. Verter 1/4 por panqueque, cocinar 2 min por lado.',macros:{cals:'420',prot:'35g',carbs:'42g',fat:'12g'}},
+    {name:'Smoothie Verde Proteico',tag:'Post-entreno · ~32g proteína',ingredients:'• 1 scoop Whey neutro\n• 1 taza espinaca\n• 1 banana congelada\n• 200ml leche de almendras\n• 1 cda mantequilla de almendras',steps:'1. Licuar líquido + espinaca + banana + hielo.\n2. Agregar Whey y mantequilla.\n3. Licuar 15 seg más. Consumir inmediatamente.',macros:{cals:'380',prot:'32g',carbs:'38g',fat:'10g'}},
+    {name:'Mug cake de chocolate',tag:'Postre · ~28g proteína',ingredients:'• 1 scoop Whey chocolate\n• 2 cdas cacao puro\n• 1 huevo\n• 3 cdas leche\n• 1 cdita aceite de coco\n• 1/2 cdita polvo de hornear',steps:'1. Mezclar todo en taza grande.\n2. Microondas 90 segundos potencia máxima.\n3. Reposar 1 minuto antes de comer.',macros:{cals:'310',prot:'28g',carbs:'18g',fat:'14g'}}
+  ]},
+  {weeks:[3,4],recipes:[
+    {name:'Overnight oats proteico',tag:'Desayuno · ~30g proteína',ingredients:'• 1 scoop Whey vainilla\n• 80g avena\n• 200ml leche\n• 100g yogur griego\n• 1 cda chía',steps:'1. Noche anterior: mezclar todo en frasco.\n2. Refrigerar 6+ horas.\n3. Mañana: agregar Whey y mezclar bien.',macros:{cals:'440',prot:'30g',carbs:'55g',fat:'8g'}},
+    {name:'Tortilla proteica de espinaca',tag:'Almuerzo · ~38g proteína',ingredients:'• 1 scoop Whey neutro\n• 3 claras + 1 huevo\n• 1 taza espinaca\n• 30g queso cottage',steps:'1. Batir huevos con Whey y sal.\n2. Agregar espinaca y queso.\n3. Cocinar a fuego bajo tapado, doblar.',macros:{cals:'350',prot:'38g',carbs:'8g',fat:'16g'}},
+    {name:'Barritas proteicas caseras',tag:'Snack · ~20g por barra',ingredients:'• 2 scoops Whey chocolate\n• 200g avena molida\n• 4 cdas mantequilla de maní\n• 2 cdas miel\n• 60ml leche',steps:'1. Mezclar secos, agregar húmedos hasta masa firme.\n2. Moldear, refrigerar 2 horas.\n3. Cortar en 8 barras.',macros:{cals:'280',prot:'20g',carbs:'28g',fat:'10g'}}
+  ]},
+  {weeks:[5,6],recipes:[
+    {name:'Waffles proteicos',tag:'Desayuno · ~34g proteína',ingredients:'• 1 scoop Whey vainilla\n• 60g harina de avena\n• 2 claras + 1 huevo\n• 100ml leche',steps:'1. Mezclar todos los ingredientes.\n2. Wafflera caliente con spray de aceite.\n3. Cocinar 4-5 min.',macros:{cals:'400',prot:'34g',carbs:'40g',fat:'9g'}},
+    {name:'Helado proteico banana-maní',tag:'Postre · ~25g proteína',ingredients:'• 1 scoop Whey chocolate\n• 2 bananas congeladas\n• 2 cdas mantequilla de maní\n• 50ml leche',steps:'1. Procesar bananas hasta crema.\n2. Agregar Whey y mantequilla.\n3. Consumir o freezer 1 hora.',macros:{cals:'360',prot:'25g',carbs:'45g',fat:'9g'}},
+    {name:'Bolitas CEO de energía',tag:'Pre-entreno · ~15g por porción',ingredients:'• 1 scoop Whey coco\n• 150g avena\n• 3 cdas mantequilla de maní\n• 2 cdas miel\n• 2 cdas chía',steps:'1. Mezclar todo, refrigerar 30 min.\n2. Formar bolitas.\n3. Guardar en heladera hasta 5 días.',macros:{cals:'200',prot:'15g',carbs:'22g',fat:'7g'}}
+  ]},
+  {weeks:[7,8],recipes:[
+    {name:'Crepes proteicos con fresas',tag:'Desayuno especial · ~32g proteína',ingredients:'• 1 scoop Whey fresa\n• 2 huevos\n• 30g harina de avena\n• 80ml leche',steps:'1. Batir todo hasta homogéneo.\n2. Sartén caliente, extender fino.\n3. Rellenar con yogur y fresas.',macros:{cals:'420',prot:'32g',carbs:'35g',fat:'14g'}},
+    {name:'Mousse de chocolate proteico',tag:'Postre premium · ~26g proteína',ingredients:'• 1 scoop Whey chocolate\n• 200g yogur griego\n• 2 cdas cacao puro\n• Endulzante a gusto',steps:'1. Mezclar todo hasta cremoso.\n2. Refrigerar 1 hora mínimo.\n3. Decorar con chips 85%.',macros:{cals:'290',prot:'26g',carbs:'20g',fat:'8g'}},
+    {name:'Pizza proteica base Whey',tag:'Cena · ~45g proteína',ingredients:'• 1 scoop Whey neutro\n• 2 huevos + 2 claras\n• 50g mozzarella\n• Salsa de tomate\n• Toppings a gusto',steps:'1. Batir huevos con Whey.\n2. Cocinar en sartén tapado 8-10 min.\n3. Agregar toppings y gratinar.',macros:{cals:'480',prot:'45g',carbs:'12g',fat:'28g'}}
+  ]}
+];
+function getRecipesForWeek(w){const g=RECIPES.find(r=>r.weeks.includes(w));return g?g.recipes:RECIPES[0].recipes;}
+function renderRecipes(){
+  const c=document.getElementById('content');c.innerHTML='';
+  const wrap=document.createElement('div');
+  const hdr=document.createElement('div');hdr.style.marginBottom='20px';
+  hdr.innerHTML='<div style="font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#82b7d9;margin-bottom:4px;">Método CEO · Recetas Fitness</div><div style="font-size:18px;font-weight:700;color:#fff;margin-bottom:6px;">Semana '+state.week+' — Recetas con Whey</div><div style="font-size:13px;color:var(--dim);line-height:1.6;">3 recetas para potenciar tus resultados. Cambian cada 2 semanas.</div>';
+  wrap.appendChild(hdr);
+  getRecipesForWeek(state.week).forEach((r,i)=>{
+    const card=document.createElement('div');card.className='recipe-card';
+    card.innerHTML='<div class="recipe-name">'+(i+1)+'. '+r.name+'</div><div class="recipe-tag">'+r.tag+'</div><div class="recipe-section">📋 Ingredientes</div><div class="recipe-ing" style="white-space:pre-line">'+r.ingredients+'</div><div class="recipe-section">👩\u200d🍳 Preparación</div><div class="recipe-steps" style="white-space:pre-line">'+r.steps+'</div><div class="recipe-macro"><div class="recipe-macro-pill">Cal <span>'+r.macros.cals+'</span></div><div class="recipe-macro-pill">Prot <span>'+r.macros.prot+'</span></div><div class="recipe-macro-pill">Carbs <span>'+r.macros.carbs+'</span></div><div class="recipe-macro-pill">Grasas <span>'+r.macros.fat+'</span></div></div>';
+    wrap.appendChild(card);
+  });
+  c.appendChild(wrap);
+}
+
+function switchTab(tab) {
+  state.tab = tab;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
+  if (tab === 'plan') renderPlan();
+  else if (tab === 'stats') renderStats();
+  else if(tab==='recetas') renderRecipes();
+}
+
+/* ============================================================
+   NAME EDITING
+   ============================================================ */
+function startEditName() {
+  if (isReadOnlyMode()) return;
+  const display = document.getElementById('student-name-display');
+  const input = document.getElementById('student-name-input');
+  input.value = state.studentName;
+  display.style.display = 'none';
+  input.style.display = 'inline-block';
+  input.focus();
+}
+function commitName() {
+  const input = document.getElementById('student-name-input');
+  const display = document.getElementById('student-name-display');
+  state.studentName = input.value;
+  save();
+  input.style.display = 'none';
+  display.style.display = 'inline';
+  renderHeader();
+}
+
+function startEditDate() {
+  if (isReadOnlyMode()) return;
+  const display = document.getElementById('date-range');
+  const input = document.getElementById('date-input');
+  input.value = state.planStart || '';
+  display.style.display = 'none';
+  input.style.display = 'inline-block';
+  input.focus();
+}
+function commitDate() {
+  const input = document.getElementById('date-input');
+  const display = document.getElementById('date-range');
+  state.planStart = input.value;
+  save();
+  input.style.display = 'none';
+  display.style.display = 'inline';
+  renderHeader();
+}
+
+/* ============================================================
+   EXPORT / IMPORT
+   ============================================================ */
+/* ============================================================ EXPORT / IMPORT */
+function resetAll() {
+  if (isReadOnlyMode()) { showSyncMsg('Desactivá el modo lectura para poder reiniciar datos','err'); return; }
+  if (!confirm('Esto borrará todo el registro guardado (series, videos, sesiones completadas y nombre). ¿Seguro?')) return;
+  state.logData = {}; state.videos = {}; state.sessionDone = {};
+  state.studentName = STUDENT_NAME; state.planStart = '';
+  save(); renderHeader(); switchTab('plan');
+}
+
+/* ============================================================
+   BOOT
+   ============================================================ */
+function _showError(msg, detail) {
+  var c = document.getElementById('content');
+  if (!c) return;
+  c.innerHTML = '<div style="padding:20px;color:var(--accent);font-family:monospace;font-size:13px;line-height:1.6">'
+    + '<div style="font-size:16px;font-weight:bold;margin-bottom:12px">⚠️ Error al cargar</div>'
+    + '<div style="margin-bottom:8px">' + msg + '</div>'
+    + (detail ? '<div style="background:#1d1d1d;padding:10px;border-radius:6px;margin-top:8px;font-size:11px;color:#9a9a96;word-break:break-all">' + detail + '</div>' : '')
+    + '</div>';
+}
+
+async function _boot() {
+  try {
+    const ghVideos = await ghGetVideos();
+    if (ghVideos && typeof ghVideos === 'object') { state.videos = ghVideos; save(); }
+  } catch(e) {}
+  try {
+    const c1 = await ghLoadCiclo1();
+    if (c1 && c1.logData) state.logDataC1 = c1.logData;
+  } catch(e) {}
+  try {
+    const ghProgress = await ghLoadProgress();
+    if (ghProgress && ghProgress.logData) {
+      // GitHub es la fuente de verdad — pisa el localStorage completamente
+      state.logData = ghProgress.logData;
+      state.sessionDone = ghProgress.sessionDone || {};
+      if(ghProgress.planStart) state.planStart = ghProgress.planStart;
+      // Guardar en localStorage para cache offline
+      storageSet('logData', state.logData);
+      storageSet('sessionDone', state.sessionDone);
+      storageSet('planStart', state.planStart);
+    }
+  } catch(e) {}
+  renderHeader();
+  renderPlan();
+}
+if (document.readyState==='loading') {
+  document.addEventListener('DOMContentLoaded', function() { _boot(); });
+} else {
+  _boot();
+}
+
+function renderExerciseList(frag, exercises, week, dayIdx, phase) {
+  let i = 0;
+  while (i < exercises.length) {
+    const ex = exercises[i];
+    const ssGroup = getSupersetGroup(ex.name); // null si no es SS, "A1"/"A2" etc si lo es
+
+    if (ssGroup) {
+      // Recopilar todos los ejercicios de esta superserie
+      const groupExs = [];
+      while (i < exercises.length && getSupersetGroup(exercises[i].name) === ssGroup) {
+        groupExs.push({ ex: exercises[i], idx: i });
+        i++;
+      }
+
+      // Contenedor visual de superserie
+      const groupEl = document.createElement('div');
+      groupEl.className = 'supersetie-group';
+
+      // Label
+      const labelEl = document.createElement('div');
+      labelEl.className = 'superserie-label';
+      labelEl.innerHTML = '⚡ SUPERSERIE ' + ssGroup + ' — ' + groupExs.length + ' ejercicios seguidos';
+      groupEl.appendChild(labelEl);
+
+      // Instrucciones
+      const instrEl = document.createElement('div');
+      instrEl.className = 'superserie-instructions';
+      const restText = groupExs[groupExs.length-1].ex.rest || '60 seg';
+      instrEl.innerHTML = '<strong>¿Cómo ejecutar la superserie?</strong><br>' +
+        '1. Hacé todas las reps del Ejercicio 1 → sin descanso pasás inmediatamente al Ejercicio 2 (y siguientes si hay más).<br>' +
+        '2. Eso completa <strong>1 ronda</strong> de la superserie.<br>' +
+        '3. Descansás <strong>' + restText + '</strong> — este es el único descanso entre rondas.<br>' +
+        '4. Volvés al Ejercicio 1 y repetís hasta completar todas las series indicadas.<br>' +
+        '<em>⚠️ No hay descanso entre los ejercicios dentro de cada ronda.</em>';
+      groupEl.appendChild(instrEl);
+
+      // Tarjetas de ejercicios
+      groupExs.forEach(({ ex: e, idx }) => {
+        const exName = getSSBaseName(e.name);
+        const modEx = Object.assign({}, e, { name: exName });
+        groupEl.appendChild(renderExCard(week, dayIdx, phase, idx, modEx));
+      });
+
+      frag.appendChild(groupEl);
+    } else {
+      frag.appendChild(renderExCard(week, dayIdx, phase, i, ex));
+      i++;
+    }
+  }
+}
+
+function renderSession(week, dayIdx, session, _tMode, _eMode) {
+  const frag = document.createDocumentFragment();
+  if (!_tMode || !_eMode) {
+    const sel = renderCEOSelector(week, dayIdx, session, (tMode, eMode) => {
+      const adapted = adaptSession(session, tMode, eMode, week, dayIdx);
+      const sessionToRender = Object.assign({}, adapted, {ceoBadge:adapted.ceoBadge||'normal',ceoNote:adapted.ceoNote||null});
+      const area = document.getElementById('session-area');
+      if (area) { area.innerHTML = ''; area.appendChild(renderSession(week, dayIdx, sessionToRender, tMode, eMode)); }
+    });
+    frag.appendChild(sel); return frag;
+  }
+  const modNote = renderCEOModNote(session);
+  if (modNote.childNodes.length > 0) frag.appendChild(modNote);
+  if (WEEK_PROGRESSION_NOTES[week]) {
+    frag.appendChild(h('div', {className:'prog-note', style:'margin-bottom:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;'},
+      h('div', {className:'phase-label', style:'margin:0 0 8px 0;'}, '🎯 Objetivo de esta semana'),
+      h('p', {style:'font-size:13px;line-height:1.6;color:var(--dim);'}, WEEK_PROGRESSION_NOTES[week])
+    ));
+  }
+  const energyMsg = getEnergyMessage(week, _eMode);
+  if (energyMsg) {
+    const msgWrap = document.createElement('div');
+    msgWrap.style.cssText = 'margin-bottom:12px;padding:12px 14px;border-radius:10px;border-left:3px solid var(--ceo-blue);background:rgba(130,183,217,.06);';
+    const msgText = document.createElement('p');
+    msgText.style.cssText = 'font-size:13px;line-height:1.7;color:var(--text);margin:0;';
+    msgText.textContent = energyMsg;
+    msgWrap.appendChild(msgText); frag.appendChild(msgWrap);
+  }
+  if (STUDENT_IS_FEMALE) frag.appendChild(renderCicloHormonal());
+  const isCarrera = session.dayType === 'carrera';
+  const isHibrido = session.dayType === 'hibrido';
+  const isCardio = session.dayType === 'cardio';
+  const doneKey = `w${week}_d${dayIdx}__done`;
+  const isDone = !!state.sessionDone[doneKey];
+
+  // Badge — Bryan es entrenamiento híbrido (fuerza + carrera + estaciones
+  // Hyrox). Usamos el mismo criterio de "tipo" que ya tenía en su C1:
+  // Fuerza / Carrera / Híbrido — no hay upper/lower ni circuito acá.
+  const badgeText = isCarrera ? 'Carrera' : isHibrido ? 'Híbrido' : isCardio ? 'Cardio' : 'Fuerza';
+  const badgeEl = h('div', {id:'session-badge'},
+    h('span', {className:'badge badge-accent'}, badgeText)
+  );
+  frag.appendChild(badgeEl);
+
+  // Title + done btn
+  const doneBtn = h('button', {
+    className:'done-btn ' + (isDone ? 'done' : 'undone'),
+    onclick: () => {
+      if (isReadOnlyMode()) return;
+      state.sessionDone[doneKey] = !state.sessionDone[doneKey];
+      save(); renderPlan(); renderHeader();
+    }
+  }, isDone ? '✓ Completada' : 'Marcar completada');
+  doneBtn.disabled = isReadOnlyMode();
+
+  const titleRow = h('div', {className:'session-header'});
+  titleRow.appendChild(h('div', {id:'session-title'}, session.dayFocus));
+  titleRow.appendChild(doneBtn);
+  frag.appendChild(titleRow);
+
+  // Aviso de sesión incompleta
+  const warnEl = document.createElement('div');
+  warnEl.id = 'session-incomplete-warn';
+  warnEl.style.cssText = 'background:rgba(255,68,38,0.1);border:1px solid var(--accent);border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:13px;color:var(--accent);display:none;';
+  frag.appendChild(warnEl);
+
+  // Coach note
+  const noteText = isCarrera
+    ? `Semana ${week}/8 · ${getWeekMeso(week).subtitle}. Respetá la zona/ritmo indicado — es lo que entrena el sistema correcto, no vayas más rápido "porque podés".`
+    : isHibrido
+    ? `Semana ${week}/8 · ${getWeekMeso(week).subtitle}. Priorizá la técnica bajo fatiga por sobre la velocidad — así se entrena de verdad para Hyrox.`
+    : `Semana ${week}/8 · ${getWeekMeso(week).subtitle}. Registrá tus cargas y la técnica en cada ejercicio.`;
+  frag.appendChild(h('div', {className:'coach-note'},
+    h('strong', null, 'Nota del coach: '), noteText
+  ));
+
+  // Fase A — Calentamiento dinámico: 4 slots de movilidad + 3 de core
+  // Sin ejercicios fijos — el coach puede variarlos cambiando los links
+  // Entrada en calor colapsable (grilla compacta 2 columnas)
+  var ecWrap = document.createElement('div');
+  ecWrap.style.cssText = 'margin-bottom:12px;border:1px solid rgba(130,183,217,.15);border-radius:10px;overflow:hidden;';
+  var ecHdr = document.createElement('div');
+  ecHdr.style.cssText = 'display:flex;align-items:center;justify-content:space-between;padding:10px 14px;cursor:pointer;background:rgba(130,183,217,.06);';
+  ecHdr.innerHTML = '<span style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ceo-blue);font-weight:600;">🔥 Entrada en calor (5-8 min)</span><span id="ec-toggle" style="font-size:11px;color:var(--dim);">▼ ver</span>';
+  var ecBody = document.createElement('div');
+  ecBody.style.cssText = 'display:none;padding:10px 12px;';
+  var ecOpen = false;
+  ecHdr.onclick = function(){ ecOpen=!ecOpen; ecBody.style.display=ecOpen?'block':'none'; var t=document.getElementById('ec-toggle'); if(t) t.textContent=ecOpen?'▲ ocultar':'▼ ver'; };
+  ecWrap.appendChild(ecHdr);
+  ecWrap.appendChild(ecBody);
+  frag.appendChild(ecWrap);
+
+  var wuSlots = [
+    { key:'mov1', label:'Movilidad 1' },
+    { key:'mov2', label:'Movilidad 2' },
+    { key:'mov3', label:'Movilidad 3' },
+    { key:'mov4', label:'Movilidad 4' },
+    { key:'core1', label:'Core 1' },
+    { key:'core2', label:'Core 2' },
+    { key:'core3', label:'Core 3' },
+  ];
+
+  var wuGrid = document.createElement('div');
+  wuGrid.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;gap:8px;';
+
+  wuSlots.forEach(function(slot) {
+    var wuKey = 'w' + week + '_d' + dayIdx + '_WU_' + slot.key;
+    var vidKey = 'calentamiento__' + slot.key; // clave fija — mismo video para todas las semanas
+    var doneKey = wuKey + '__done';
+
+    var wuCard = document.createElement('div');
+    wuCard.style.cssText = 'background:var(--surface2);border-radius:8px;padding:8px 10px;border:1px solid var(--border);';
+
+    var top = document.createElement('div');
+    top.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;';
+
+    var labelEl = document.createElement('div');
+    labelEl.style.cssText = 'font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);';
+    labelEl.textContent = slot.label;
+
+    var chk = document.createElement('input');
+    chk.type = 'checkbox';
+    chk.checked = !!(state.logData[doneKey] && state.logData[doneKey].done);
+    chk.style.cssText = 'width:14px;height:14px;accent-color:var(--ceo-blue);cursor:pointer;';
+    chk.disabled = isReadOnlyMode();
+    chk.addEventListener('change', function() {
+      if (isReadOnlyMode()) return;
+      state.logData[doneKey] = { done: chk.checked }; save();
+      labelEl.style.color = chk.checked ? 'var(--ceo-blue)' : 'var(--dim)';
+    });
+    if (chk.checked) labelEl.style.color = 'var(--ceo-blue)';
+
+    top.appendChild(labelEl); top.appendChild(chk);
+    wuCard.appendChild(top);
+
+    var vidRow = document.createElement('div');
+    vidRow.style.cssText = 'position:relative;width:100%;';
+
+    var vidInput = document.createElement('input');
+    vidInput.type = 'url';
+    vidInput.placeholder = 'Link video...';
+    vidInput.value = state.videos[vidKey] || '';
+    vidInput.style.cssText = 'width:100%;font-size:11px;padding:4px 26px 4px 6px;border-radius:5px;border:1px solid var(--border);background:var(--surface);color:var(--dim);outline:none;box-sizing:border-box;';
+    vidInput.readOnly = isReadOnlyMode();
+
+    var playBtn = document.createElement('button');
+    playBtn.type = 'button';
+    playBtn.textContent = '▶';
+    playBtn.title = 'Ver video';
+    playBtn.style.cssText = 'position:absolute;top:50%;right:3px;transform:translateY(-50%);background:none;border:none;color:var(--lime);font-size:12px;line-height:1;cursor:pointer;padding:2px 4px;display:none;';
+    function updateWuPlayBtn() {
+      playBtn.style.display = vidInput.value.trim() ? 'block' : 'none';
+    }
+    playBtn.addEventListener('click', function() {
+      if (vidInput.value.trim()) openVideoModal(vidInput.value.trim());
+    });
+
+    vidInput.addEventListener('change', function() {
+      if (isReadOnlyMode()) return;
+      if (!state.videos) state.videos = {};
+      state.videos[vidKey] = vidInput.value.trim();
+      saveVideo(vidKey, vidInput.value.trim());
+      updateWuPlayBtn();
+    });
+    updateWuPlayBtn();
+
+    vidRow.appendChild(vidInput); vidRow.appendChild(playBtn);
+    wuCard.appendChild(vidRow);
+
+    wuGrid.appendChild(wuCard);
+  });
+
+  ecBody.appendChild(wuGrid);
+
+  // Ejercicios principales
+  frag.appendChild(h('div', {className:'phase-label'}, '💪 Ejercicios principales'));
+  renderExerciseList(frag, session.blockB, week, dayIdx, 'B');
+
+
+  // Ejercicios accesorios
+  if (session.blockC && session.blockC.length) {
+    frag.appendChild(h('div', {className:'phase-label'}, '🎯 Ejercicios accesorios'));
+    renderExerciseList(frag, session.blockC, week, dayIdx, 'C');
+  }
+
+  // Cierre
+  const faseDText = session.phaseD || 'Caminata de recuperación 3-5 min + estiramiento de las zonas trabajadas.';
+  frag.appendChild(h('div', {className:'phase-d'},
+    h('strong', null, '🧘 Vuelta a la calma: '),
+    faseDText
+  ));
+
+  return frag;
+}
+
+/* ============================================================
+   RENDER: EXERCISE CARD
+   ============================================================ */
+/* ============================================================
+   VIDEO EMBED HELPERS — funciones globales accesibles desde
+   Fase A (calentamiento) y Fase B/C (ejercicios principales)
+   ============================================================ */
+function getEmbedUrl(raw) {
+  if (!raw) return null;
+  var url = raw.trim();
+  var vimeoMatch = url.match(/vimeo\.com\/(?:video\/)?([0-9]+)/);
+  if (vimeoMatch) return 'https://player.vimeo.com/video/' + vimeoMatch[1] + '?title=0&byline=0&portrait=0';
+  var ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+  if (ytMatch) return 'https://www.youtube.com/embed/' + ytMatch[1] + '?rel=0';
+  return null;
+}
+function isVertical(raw) {
+  if (!raw) return false;
+  return raw.includes('/shorts/') || raw.includes('shorts');
+}
+
+function openVideoModal(url){
+  if(!url || !url.trim()){ return; }
+  const embedUrl = getEmbedUrl(url);
+  if(!embedUrl){ window.open(url, '_blank'); return; } // fallback si no es un link reconocible
+  const overlay = document.getElementById('video-modal-overlay');
+  const iframe = document.getElementById('video-modal-iframe');
+  const wrap = document.getElementById('video-modal-iframe-wrap');
+  iframe.src = embedUrl;
+  wrap.classList.toggle('vertical', isVertical(url));
+  overlay.classList.add('active');
+}
+function closeVideoModal(){
+  const overlay = document.getElementById('video-modal-overlay');
+  const iframe = document.getElementById('video-modal-iframe');
+  overlay.classList.remove('active');
+  iframe.src = '';
+}
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeVideoModal(); });
+
+// ── Detectar si un nombre es parte de superserie ─────────────────────────────
+function isSS(name) { return /^SS [AB]\d:/i.test(name); }
+function getSupersetGroup(name) { const m = name.match(/^SS ([AB])\d:/i); return m ? m[1] : null; }
+function getSSBaseName(name) { return name.replace(/^SS [AB]\d:\s*/i, ''); }
+
+// ── Explicaciones de técnicas avanzadas ──────────────────────────────────────
+function getTechNote(name, reps) {
+  const n = (name + ' ' + (reps||'')).toLowerCase();
+  if (/myo.rep/i.test(n)) return {
+    title: '¿Cómo ejecutar los Myo-reps?',
+    text: '1. Hacé el número de reps indicado (ej: 10) con buena técnica — esto es el "set activador". Dejá 1-2 reps en el tanque, no llegues al fallo total.\n2. Descansá SOLO 5 segundos contando en tu cabeza (es intencional que sea poco).\n3. Hacé 3-5 reps más — esto es un "mini-set".\n4. Descansá otros 5 segundos.\n5. Repetí los mini-sets 3 o 4 veces más, o hasta que ya no puedas completar 3 reps seguidas con buena forma.\n⏱ DESCANSO ENTRE SERIES: Una vez que terminaste todos los mini-sets, recién ahí descansás el tiempo indicado (ej: 60 seg) antes de empezar la siguiente serie completa desde el paso 1.'
+  };
+  if (/drop.set/i.test(n)) return {
+    title: '¿Cómo ejecutar un Drop Set?',
+    text: '1. Hacé las reps indicadas con tu peso habitual hasta el fallo técnico (o hasta el número indicado).\n2. SIN descansar, bajá el peso inmediatamente un 20-30% (ej: si usabas 20 kg, pasás a 14-16 kg).\n3. Seguí haciendo reps con el peso más liviano hasta el fallo nuevamente.\n⚠️ Todo eso JUNTO (peso original + bajada) cuenta como UNA sola serie.\n⏱ DESCANSO ENTRE SERIES: Recién después de terminar el drop completo (ambos pesos) descansás el tiempo indicado antes de la siguiente serie.'
+  };
+  if (/tempo|tempo lento/i.test(n)) return {
+    title: '¿Qué es el tempo lento?',
+    text: 'En cada repetición, bajá el peso contando 3 segundos lentamente (fase de bajada). Arriba podés subir con normalidad. Esto no cambia los descansos entre series — seguís descansando el tiempo indicado entre cada serie completa.\nEjemplo en sentadilla: bajás 3 segundos hasta abajo, subís normal. Eso es 1 rep.'
+  };
+  if (/pausa/i.test(n) && /\d\s*seg/i.test(n)) return {
+    title: 'Técnica de pausa',
+    text: 'En el punto de máxima tensión del ejercicio, mantenés la posición el tiempo indicado DENTRO de cada repetición (ej: 2 seg arriba en el hip thrust) antes de continuar.\n⏱ DESCANSO ENTRE SERIES: No cambia — seguís descansando el tiempo indicado entre series completas.'
+  };
+  return null;
+}
+
+function getWeekMeso(week){
+  if(week<=4) return MESOCYCLES[0];
+  if(week<=8) return MESOCYCLES[1];
+  return MESOCYCLES[2];
+}
+
+async function saveVideo(exName, url) {
+  state.videos[exName] = url;
+  storageSet('videos', state.videos);
+  // Guardar en GitHub en background (no bloquea la UI)
+  const ok = await ghSaveVideos(state.videos);
+  if (!ok) {
+    // Si falla GitHub, igual queda en localStorage como backup
+    console.warn('No se pudo guardar en GitHub, queda en cache local');
+  }
+}
+
+function renderHeader() {
+  const nameEl = document.getElementById('student-name-display');
+  const nameInput = document.getElementById('student-name-input');
+  if(nameEl) nameEl.textContent = state.studentName ? '– ' + state.studentName.toUpperCase() : 'TOCAR PARA PONER NOMBRE';
+
+  const drEl = document.getElementById('date-range'); if(drEl) drEl.textContent = dateRange();
+  const ccEl = document.getElementById('completed-count'); if(ccEl) ccEl.textContent = completedWeeks();
+
+  const cw = completedWeeks();
+  const segs = document.getElementById('progress-segs');
+  if(segs) {
+    segs.innerHTML = '';
+    for (let i = 1; i <= 8; i++) {
+      const seg = h('div', {className: 'prog-seg' + (i <= cw ? ' done' : '')});
+      segs.appendChild(seg);
+    }
+  }
+
+  const roBtn = document.getElementById('readonly-toggle-btn');
+  const roBanner = document.getElementById('readonly-banner');
+  if (roBtn) {
+    const ro = isReadOnlyMode();
+    roBtn.textContent = ro ? '👁 MODO LECTURA: ON' : '👁 MODO LECTURA: OFF';
+    roBtn.style.borderColor = ro ? 'var(--accent)' : '';
+    roBtn.style.color = ro ? 'var(--accent)' : '';
+    if (roBanner) roBanner.style.display = ro ? 'block' : 'none';
+  }
+}
+
+/* ============================================================
+   RENDER: PLAN TAB
+   ============================================================ */
+function renderPlan() {
+  const c = document.getElementById('content');
+  c.innerHTML = '';
+
+  // Week selector
+  const label = h('div', {className:'phase-label', style:'margin-bottom:8px'}, 'Bloques del plan');
+  const weekRow = h('div', {className:'scroll', id:'week-selector'});
+  for (let w = 1; w <= 8; w++) {
+    const btn = h('button', {className:'week-btn mono' + (w === state.week ? ' active' : ''), onclick:() => { state.week = w; state.day = 0; renderPlan(); renderHeader(); }}, 'S' + w);
+    weekRow.appendChild(btn);
+  }
+
+  const meso = getWeekMeso(state.week);
+  const sessions = getWeekSessions(state.week);
+
+  // Block card
+  const blockCard = h('div', {id:'block-card'},
+    h('div', {id:'block-label'}, meso.name.toUpperCase() + ': ' + meso.subtitle.toUpperCase()),
+    h('div', {id:'block-focus'}, meso.focus)
+  );
+
+  // Day tabs
+  const dayRow = h('div', {className:'scroll', id:'day-tabs'});
+  sessions.forEach((s, i) => {
+    const dot = h('span', {className:'day-dot'});
+    const btn = h('button', {
+      className:'day-btn' + (i === state.day ? ' active' : ''),
+      onclick:() => { state.day = i; renderPlan(); }
+    }, dot, s.dayLabel);
+    dayRow.appendChild(btn);
+  });
+
+  c.appendChild(label);
+  c.appendChild(weekRow);
+  c.appendChild(blockCard);
+  c.appendChild(dayRow);
+  const sessionArea = h('div', {id:'session-area'});
+  sessionArea.appendChild(renderSession(state.week, state.day, sessions[state.day]));
+  c.appendChild(sessionArea);
+}
+
+/* ============================================================
+   RENDER: SESSION
+   ============================================================ */
+
+async function _boot() {
+  try {
+    const ghVideos = await ghGetVideos();
+    if (ghVideos && typeof ghVideos === 'object') { state.videos = ghVideos; save(); }
+  } catch(e) {}
+  try {
+    const p = await ghLoadProgress();
+    if (p && p.logData && p.app === APP_TAG) {
+      state.logData = p.logData; state.sessionDone = p.sessionDone||{};
+      if(p.planStart) state.planStart = p.planStart;
+      storageSet('logData',state.logData); storageSet('sessionDone',state.sessionDone); storageSet('planStart',state.planStart);
+    }
+    const c1 = await ghLoadCiclo1();
+    if(c1 && c1.logData) state.logDataC1 = c1.logData;
+  } catch(e) {}
+  renderHeader();
+  renderPlan();
+}
+
+function flushAutoSync() { ghSaveProgress(); }
+document.addEventListener('visibilitychange', function() {
+  if (document.visibilityState === 'hidden') flushAutoSync();
+});
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() { _boot(); });
+} else {
+  _boot();
+}
+
+</script>
+</body>
+</html>
